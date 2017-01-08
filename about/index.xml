@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abouts on EbSarr Memos</title>
+    <link>https://ebsarr.github.io/about/index.xml</link>
+    <description>Recent content in Abouts on EbSarr Memos</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 08 Jan 2017 01:29:33 +0900</lastBuildDate>
+    <atom:link href="https://ebsarr.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>About</title>
+      <link>https://ebsarr.github.io/about/</link>
+      <pubDate>Sun, 08 Jan 2017 01:29:33 +0900</pubDate>
+      
+      <guid>https://ebsarr.github.io/about/</guid>
+      <description>&lt;p&gt;Hello Everyone! Thank you all for landing in my blog.
+&lt;br&gt;&lt;br&gt;
+The idea of creating a blog has been on my mind for a very long time. I&amp;rsquo;ve resisted it for many reasons, but mainly because I&amp;rsquo;m naturally shy, don&amp;rsquo;t like to talk about myself or my opinions, or even what I&amp;rsquo;m thinking, especially when nobody is asking. That is what bloging is about right? Talking about stuffs that people might not even care about. I however would like to get better at writing and expressing myself in general. That is why I decided to create this blog.
+&lt;br&gt;&lt;br&gt;
+Here is an overview of the things I&amp;rsquo;m intersted in and might write about:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;IT, mainly cloud computing&lt;/li&gt;
+&lt;li&gt;Coding: I write code in python, golang and some shell scripting&lt;/li&gt;
+&lt;li&gt;Politics, I guess I&amp;rsquo;ll most of the time keep my political opinions to myself&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;From time to time, I might also write about some really unrelated subject, like sports, movies, music, whatever comes to my mind you know&amp;hellip;
+&lt;br&gt;&lt;br&gt;
+I hope you&amp;rsquo;ll enjoy this blog. Thank you!!!&lt;/p&gt;
+
+&lt;p&gt;- EbSarr&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
