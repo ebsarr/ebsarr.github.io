@@ -2,35 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ebsarr.github.io/about/</loc>
-    <lastmod>2017-01-08T01:29:33+09:00</lastmod>
+    <loc>http://btaars.net/post/first/</loc>
+    <lastmod>2017-01-09T20:06:19+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ebsarr.github.io/post/packet-go-cli/</loc>
-    <lastmod>2017-01-07T18:51:59+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ebsarr.github.io/post/Create-a-server-and-mount-a-block-storage-device/</loc>
-    <lastmod>2016-11-27T19:57:16+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ebsarr.github.io/about/</loc>
-    <lastmod>2017-01-08T01:29:33+09:00</lastmod>
+    <loc>http://btaars.net/post/</loc>
+    <lastmod>2017-01-09T20:06:19+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ebsarr.github.io/</loc>
-    <lastmod>2017-01-08T01:29:33+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ebsarr.github.io/post/</loc>
-    <lastmod>2017-01-07T18:51:59+09:00</lastmod>
+    <loc>http://btaars.net/</loc>
+    <lastmod>2017-01-09T20:06:19+09:00</lastmod>
     <priority>0</priority>
   </url>
   
