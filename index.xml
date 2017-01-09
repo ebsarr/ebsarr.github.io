@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>btaars.net on btaars.net</title>
-    <link>http://btaars.net/index.xml</link>
+    <link>http://blog.btaars.net/index.xml</link>
     <description>Recent content in btaars.net on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -11,10 +11,10 @@
     
     <item>
       <title>Hello World!</title>
-      <link>http://btaars.net/post/first/</link>
+      <link>http://blog.btaars.net/post/first/</link>
       <pubDate>Mon, 09 Jan 2017 20:06:19 +0900</pubDate>
       
-      <guid>http://btaars.net/post/first/</guid>
+      <guid>http://blog.btaars.net/post/first/</guid>
       <description>$ printf &amp;quot;%s\n&amp;quot; &#39;Hello, World!&#39; Hello, World!  I&amp;rsquo;m starting a fresh blog site and this is my first post. I&amp;rsquo;ll try my best to post frequently and keep the site alive. A brief introduction I&amp;rsquo;ve been living in Japan for a very long time. I currently work in a Japanese company (been working there for more than a decade now). In the beginning, I&amp;rsquo;ve had the chance to work as a technical support staff for one year.</description>
     </item>
     

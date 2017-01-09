@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://btaars.net/post/first/</loc>
+    <loc>http://blog.btaars.net/post/first/</loc>
     <lastmod>2017-01-09T20:06:19+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://btaars.net/post/</loc>
+    <loc>http://blog.btaars.net/post/</loc>
     <lastmod>2017-01-09T20:06:19+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://btaars.net/</loc>
+    <loc>http://blog.btaars.net/</loc>
     <lastmod>2017-01-09T20:06:19+09:00</lastmod>
     <priority>0</priority>
   </url>
