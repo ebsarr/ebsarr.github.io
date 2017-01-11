@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="Hugo 0.18.1" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="http://blog.btaars.net/index.xml" rel="alternate" type="application/rss+xml" title="btaars.net" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    
+    <script src="https://apis.google.com/js/platform.js" async defer>{lang: 'ja'}</script>
+    
+    <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+    <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>Creating this blog with Hugo &amp; Github Pages | btaars.net</title>
+  </head>
+  <body>
+    <div id="wrap">
+      
+      <header class="site-header">
+        <div class="site-header-left">
+          <a class="site-header-title" href="http://blog.btaars.net/">btaars.net</a>
+        </div>
+      </header>
+      <div class="container">
+        <div id="main">
+
+<div class="article">
+  <header>
+    <div class="article-header">
+      <h1>Creating this blog with Hugo &amp; Github Pages</h1>
+      <div class="article-meta">
+        <span class="posttime">2017/01/11</span>
+        
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/hugo">hugo</a>
+    </li>
+    
+    <li>
+        <a href="/tags/golang">golang</a>
+    </li>
+    
+    <li>
+        <a href="/tags/github">Github</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+  </header>
+  <div class="content">
+    
+
+<p>I had time during the new year holidays, so I went online to look for a web framework to develop web applications in <code>golang</code>. I accidently lended on the <a href="https://gohugo.io/" target="_blank">hugo</a> site and discovered this awesome tool. The concept is very simple: you can easily generate a static website in a few minutes. This was quite different from what I was looking for, but it looked interesting and I decided to give it a try. <code>hugo</code> is suitable for blogging or creating simple websites, and I loved the workflow: to give you an overviiew,  here is how I add a new post.</p>
+
+<pre><code class="language-sh"># Create the post
+$ hugo new post/my_post
+# Edit it
+$ code content/post/my_post
+# Verify
+$ hugo server
+# Build
+$ hugo
+# Commit and push
+$ cd public
+$ git add --all
+$ git commit -am &quot;my_post&quot;
+$ git push
+</code></pre>
+
+<p>Et voila, the new blog post is online and available to the world to see. I love the fact that I can do all the editing, verifying on my local PC. This means that I can edit whenever, even when offline and commit/push later. Cool right? I know that hugo has been out there for a while, but I want to take the chance to talk about the steps I took to build this blog.</p>
+
+<h2 id="installing-hugo">Installing Hugo</h2>
+
+<p>Installing hugo is pretty simple. You can either download the appropriate package from <a href="https://github.com/spf13/hugo/releases" target="_blank">this page</a> or install with <code>go get</code> if you are a gopher. Mac users can also install with <code>brew</code>:</p>
+
+<h3 id="go-get">go get</h3>
+
+<pre><code class="language-sh">$ go get -u github.com/spf13/hugo
+</code></pre>
+
+<p>This will install <code>hugo</code> in your <code>$GOPATH/bin</code> directory. If you&rsquo;ve already added this directory in your <code>$PATH</code>, you should be able to invoke the <code>hugo</code> command from your shell.</p>
+
+<h3 id="brew">brew</h3>
+
+<pre><code class="language-sh">$ brew update &amp;&amp; brew install hugo
+</code></pre>
+
+<p>That&rsquo;s it.</p>
+
+<h2 id="creating-your-site">Creating your site</h2>
+
+<p><code>hugo</code> provides many commands to create, edit, and generate contents for your site. The first step is to create the site:</p>
+
+<pre><code class="language-sh">$ hugo new site my_site
+</code></pre>
+
+<p>This command will generate all the files you need to get started with your <code>hugo</code> site under a <code>my_site</code> directory:</p>
+
+<pre><code>$ cd my_site
+$ ls -l
+total 8
+drwxr-xr-x  2 kemal  staff  68 Jan 11 01:21 archetypes
+-rw-r--r--  1 kemal  staff  82 Jan 11 01:21 config.toml
+drwxr-xr-x  2 kemal  staff  68 Jan 11 01:21 content
+drwxr-xr-x  2 kemal  staff  68 Jan 11 01:21 data
+drwxr-xr-x  2 kemal  staff  68 Jan 11 01:21 layouts
+drwxr-xr-x  2 kemal  staff  68 Jan 11 01:21 static
+drwxr-xr-x  2 kemal  staff  68 Jan 11 01:21 themes
+</code></pre>
+
+<p>The most important files you have to edit are the <code>config.toml</code> file and the md files you are going to edit for posting blog articles in your site.</p>
+
+<h3 id="adding-a-post">Adding a post</h3>
+
+<p>It&rsquo;s as simple as:</p>
+
+<pre><code>$ hugo new post/my_post.md
+</code></pre>
+
+<p>This will create the a <code>my_post.md</code> file under <code>content/post</code>. You can open this file with your prefered text editor and add your contents.
+<br>
+After editing you can use the <code>hugo</code> command to start a server locally and preview your site:</p>
+
+<pre><code>$ hugo server
+ERROR: 2017/01/11 01:30:43 server.go:132: port 1313 already in use, attempting to use an available port
+Started building sites ...
+
+...
+Serving pages from memory
+Web Server is available at http://localhost:54181/ (bind address 127.0.0.1)
+Press Ctrl+C to stop
+</code></pre>
+
+<p>If you go to <code>http://localhost:54181</code>, you&rsquo;ll not see anything as we haven&rsquo;t specified a theme to display our contents.</p>
+
+<h3 id="adding-a-theme">Adding a theme</h3>
+
+<p>You need to add a theme before you can view or generate your static site. Many open sourced themes are available to use from the official hugo site. You can start from here, or if up to the task, follow the hugo documentation to create your own themes.
+<br><br>
+<em>Hugo themes site</em>
+<br><br>
+<img src="/img/hugo-theme.png" alt="hugo-themre" />
+<br><br>
+You can browse here and choose the theme of your liking.
+<br><br>
+Installing the theme: just following the instructions in the theme&rsquo;s page. In most cases, you just need to clone a git repository under the <code>themes</code> directory in your hugo site.</p>
+
+<pre><code class="language-sh">$ cd themes
+$ git clone https://github.com/jbub/ghostwriter
+</code></pre>
+
+<p>Now with the <code>--theme</code> option, we can preview our site</p>
+
+<pre><code class="language-sh">$ hugo server --theme=ghostwriter
+...
+Serving pages from memory
+Web Server is available at http://localhost:60765/ (bind address 127.0.0.1)
+Press Ctrl+C to stop
+</code></pre>
+
+<p>If you go to <a href="http://localhost:1313">http://localhost:1313</a>, you should be able the preview our generated site.
+<br>
+<br>
+<em>Top page</em>
+<br><br>
+<img src="/img/top_view.png" alt="top-view" />
+<br><br>
+<em>The post we just edited</em>
+<br><br>
+<img src="/img/post.png" alt="top-view" />
+<br><br>
+You must note that every theme comes with custom functionnalities, usually configurable with the <code>config.toml</code> file under your side. Check the documentation of the theme you want to use and configure as needed. First copy the config file in the example site of your prefered theme to your site directory and modify the configurations to suit your preferences. If the config file is well documented, you should be able to configure without referring to other onlile resources.</p>
+
+<pre><code class="language-sh"># backup the current config file
+$ cp -p config.toml config.toml.`date +%Y%m%d`
+# copy the theme's example config
+$ cp -p themes/ghostwriter/exampleSite/config.toml .
+# configure
+$ vi config.toml
+</code></pre>
+
+<h3 id="build-and-generate-the-static-contents">Build and generate the static contents</h3>
+
+<p><strong>Forenote</strong>: after invoking the <code>hugo</code> command to build the site, hugo will generate all the contents under the <code>public</code> directory in your hugo site. Now since I want to publish the site on github, I want to create the <code>public</code> directory as a clone of the github repository that will host the site. So before the very first build, I want to create an empty repository on github and clone it to <code>public</code>. To create a github page, the repository hosting the site must have the name in the form of &lt;username&gt;.github.io . In my case, I created the repo btaars.github.io . The next step is to create a clone of this repo under <code>public</code>:</p>
+
+<pre><code class="language-sh">$ git clone https://github.com/btaars/btaars.github.io.git public
+Cloning into 'public'...
+warning: You appear to have cloned an empty repository.
+</code></pre>
+
+<p>Now to build the site, just invoke the <code>hugo</code> command under your hugo site directory:</p>
+
+<pre><code class="language-sh">$ $ hugo
+Started building sites ...
+Built site for language en:
+0 draft content
+0 future content
+0 expired content
+1 regular pages created
+2 other pages created
+0 non-page files copied
+2 paginator pages created
+0 tags created
+total in 29 ms
+</code></pre>
+
+<p>You should see the contents generated under the <code>public</code> directory</p>
+
+<pre><code class="language-sh">$ cd public/
+$ ls
+2017        dist        index.xml   page        sitemap.xml
+404.html    index.html  js          post        styles
+</code></pre>
+
+<p>That&rsquo;s it.
+<br><br>
+Now that our site is ready, we can build and generated the static contents, ready for publishing. There are many ways to do so, like hosting your static contents on s3, or a virtual machine on the cloud. But an even more easy way to publish is to use github pages.</p>
+
+<h2 id="publishing-on-github">Publishing on Github</h2>
+
+<p>Since the <code>public</code> directory under our site is a clone of our target github repo, we just need to commit and push:</p>
+
+<pre><code># Check status
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        2017/
+        404.html
+        dist/
+        index.html
+        index.xml
+        js/
+        page/
+        post/
+        sitemap.xml
+        styles/
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+# Add, commit and push
+$ git add --all
+$ git commit -am &quot;my_post&quot;
+$ git push
+Counting objects: 30, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (21/21), done.
+Writing objects: 100% (30/30), 46.92 KiB | 0 bytes/s, done.
+Total 30 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), done.
+To https://github.com/btaars/btaars.github.io
+ * [new branch]      master -&gt; master
+</code></pre>
+
+<p>That&rsquo;s it. In just a few minutes, the site should be online at https://&lt;username&gt;.github.io . In my case that is <a href="https://btaars.github.io">https://btaars.github.io</a> .
+<br>
+From this stage, adding new posts looks just like the steps I mentioned at the beginning of this article.</p>
+
+<h4 id="reference">Reference</h4>
+
+<ul>
+<li>Hugo site: <a href="http://gohugo.io/">http://gohugo.io/</a></li>
+<li>Github pages: <a href="https://pages.github.com/">https://pages.github.com/</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <div class="article-footer">
+      
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/hugo">hugo</a>
+    </li>
+    
+    <li>
+        <a href="/tags/golang">golang</a>
+    </li>
+    
+    <li>
+        <a href="/tags/github">Github</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      
+      
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'btaars';
+    var disqus_identifier = 'http:\/\/blog.btaars.net\/post\/creating-this-blog\/';
+    var disqus_title = 'Creating this blog with Hugo \x26 Github Pages';
+    var disqus_url = 'http:\/\/blog.btaars.net\/post\/creating-this-blog\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      <div id="pagenavigation-next-prev">
+        
+        <div id="pagenavigation-next">
+          <span class="pagenav-label">Previous</span>
+          <a href="http://blog.btaars.net/post/first/">Hello World!</a>
+        </div>
+        
+        
+      </div>
+      
+    </div>
+  </footer>
+</div>
+        </div>
+        <div class="sidebar">
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Author</span>
+    </div>
+    <div id="author">
+      <span>btaars.net</span>
+      <div>
+        
+        <a href="https://twitter.com/ebsarr37"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        <a href="https://github.com/ebsarr"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Categories</span>
+    </div>
+    <div class="categories">
+      <ul>
+        
+        <li>
+          <a href="/categories/golang"><span></span>golang (1)</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>RSS</span>
+    </div>
+    <div id="rss">
+      <a href="http://blog.btaars.net/index.xml" type="application/rss+xml" target="_blank">
+        <i class="fa fa-rss-square fa-2x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+      </div>
+      <footer>
+        <div id="site-footer-wrap">
+          <div id="site-footer">
+            <span>Powered by <a href="https://gohugo.io/">Hugo</a>.</span>
+            <span>
+              
+              Copyright (c) 2017, <a href="http://blog.btaars.net/">btaars.net</a>
+              
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
