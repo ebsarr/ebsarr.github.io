@@ -6,8 +6,17 @@
     <description>Recent content in btaars.net on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 May 2017 00:05:08 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 05 Dec 2017 01:23:06 +0900</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>About logs</title>
+      <link>http://blog.btaars.net/post/about_logging/</link>
+      <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
+      
+      <guid>http://blog.btaars.net/post/about_logging/</guid>
+      <description>I was looking for an article online that explains clearly how to idiomatically do logging in golang. What is the best practice? This is the article that I found by googling golang logging. It turned out not to be how-to article, but rather an opinion about what should developers log when writing their applications. Here are some thoughts about the article. I agree with some of the author&amp;rsquo;s opinions while I don&amp;rsquo;t with others.</description>
+    </item>
     
     <item>
       <title>Painful love</title>

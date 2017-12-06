@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="Hugo 0.18.1" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="http://blog.btaars.net/index.xml" rel="alternate" type="application/rss+xml" title="btaars.net" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    
+    <script src="https://apis.google.com/js/platform.js" async defer>{lang: 'ja'}</script>
+    
+    <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+    <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>About logs | btaars.net</title>
+  </head>
+  <body>
+    <div id="wrap">
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90354151-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+      <header class="site-header">
+        <div class="site-header-left">
+          <a class="site-header-title" href="http://blog.btaars.net/">btaars.net</a>
+        </div>
+      </header>
+      <div class="container">
+        <div id="main">
+
+<div class="article">
+  <header>
+    <div class="article-header">
+      <h1>About logs</h1>
+      <div class="article-meta">
+        <span class="posttime">2017/12/05</span>
+        
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/sysadmin">sysadmin</a>
+    </li>
+    
+    <li>
+        <a href="/tags/devops">devops</a>
+    </li>
+    
+    <li>
+        <a href="/tags/golang">golang</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+  </header>
+  <div class="content">
+    
+
+<p>I was looking for an article online that explains clearly how to idiomatically do logging in golang. What is the best practice?
+<br>
+This is the <a href="https://dave.cheney.net/2015/11/05/lets-talk-about-logging">article</a> that I found by googling <code>golang logging</code>. It turned out not to be how-to article, but rather an opinion about what should developers log when writing their applications. Here are some thoughts about the article. I agree with some of the author&rsquo;s opinions while I don&rsquo;t with others.
+<br>
+First of all, you have to understand that I spent years mainting services running on applications that other people wrote for years. Focusing on the logging part, different developers or different companies have different logging policies. Depending on the logging policy, ease of use (in my case this means ease of maintaining, troubleshooting and fixing the application when somethis goes wrong) differs a lot. My point is, the way I think about logging is deeply linked to my server/application maintenance career.
+<br> Having said that, let&rsquo;s go back to the article. So the authors focuses mainly about what log levels are really needed when writting apps and implemenenting some type of logging for the app. It looks like the article itself is focused on golang, but the way it&rsquo;s written makes it look like a more general opinion about logging in general. A few points:</p>
+
+<h2 id="warnings-are-not-needed">Warnings are not needed</h2>
+
+<blockquote>
+<p>Nobody reads warnings, because by definition nothing went wrong. Maybe something might go wrong in the future, but that sounds like someone else’s problem.</p>
+</blockquote>
+
+<p>That&rsquo;s right. What does warning mean? Should I restart the application? Should I keep on monitoring the logs until something really wrong happens? For me warning has always been a confusing log level. Even in real life, I found some warnings quite confusing. In mountains in Japan, you see a lot of places with warnings like &ldquo;be aware, falling rocks here&rdquo; . I&rsquo;m like okay, no matter how carefully I drive, there is nothing I can do if a big rocks falls on my car at full speed, I can&rsquo;t even see it coming&hellip; Okay I&rsquo;m not saying that that warning should not be there in the first place, I think it&rsquo;s just a way to tell us that there is a danger when driving on these mountains roads. But anyways, it&rsquo;s confusing.
+<br> For applications, it&rsquo;s less of a danger, so I really think that warnings are not needed at all. As the authors says, either it&rsquo;s an info, or an error.
+<br>However, there are still exceptions I think. It all depends on what the application does, in what environment does the application run, does it need to worry about the conditions under which it&rsquo;s running? So generally speaking, warnings not a must, but look at the pros and cons, the requirements of the app, the systems it relies on, the people who will use it to make a good decision on this.</p>
+
+<h2 id="how-about-errors">How about errors?</h2>
+
+<p>Two things that caught me.</p>
+
+<blockquote>
+<p>Error handling and logging are closely related, so on the face of it, logging at error level should be easily justifiable. I disagree.</p>
+</blockquote>
+
+<p><br></p>
+
+<blockquote>
+<p>If you choose to handle the error by logging it, by definition it’s not an error any more — you handled it. The act of logging an error handles the error, hence it is no longer appropriate to log it as an error.</p>
+</blockquote>
+
+<p>Hmmm&hellip; So logically speaking, what our author is saying kind of makes sense. But wait, for the programmer, maybe write a code to log an event that actually describes an error is handling the error. But what about the guy who is going to use your application? For somebody who&rsquo;s maintaining a service that is using your application, if something bad happens the first thing to do is try to find out what happened. Knowing what went wrong is the most straight forward way to fix an issue. How do I know what went wrong? The first thing to do is abviously look at the log files. What happened before the application crashed? Given a situation like this, it would be best to know the difference between an error (something abnormal that happened at runtime ) and an info.
+<br> Let me illustrate this with two examples:
+<br>Exmaple 1</p>
+
+<pre><code>2017-12-06 23:42:22+09 hostname app1 [INFO] Application started successfully
+2017-12-06 23:44:53+09 hostname app1 [INFO] Could not retrieve message id:483jei435 from database
+2017-12-06 23:45:33+09 hostname app1 [INFO] Putting message to queue
+</code></pre>
+
+<p><br>Exmaple 2</p>
+
+<pre><code>2017-12-06 23:42:22+09 hostname app1 [INFO] Application started successfully
+2017-12-06 23:44:53+09 hostname app1 [ERROR] Could not retrieve message id:483jei435 from database
+2017-12-06 23:45:33+09 hostname app1 [INFO] Putting message to queue
+</code></pre>
+
+<p>If for example, not being able to retrieve the message from the database is the beginning of the an issue, one could trace this root cause easily my doing a</p>
+
+<pre><code>grep ERROR app.log
+</code></pre>
+
+<p>right? If the developer decided that error log level is not actually needed, how could we trace this root cause with exmaple 1? If you know the details of the app, then it might be really easy. However, in production the developer is not usually the first or second tier to investigate the issue. Somebody else will  be looking at the log files. I say, errors should be meaningful, that is they happen only something went wrong, and may need some action. In the example above, even if the application did not crash, one could need to select all the messages that could not be retrieved from the database and do something about the failed transactions, etc &hellip;
+<br> Anyways, I think it&rsquo;s too opiniated to say, errors are not needed. Think about the actual production environment in which the app will run, who will maintain it, a solution to easily find where a problem may have happened. There are many things, other than the code itself, to think about when desiging logging into your apps. That&rsquo;s what I think&hellip; Or did I miss something in the original article?</p>
+
+  </div>
+  <footer>
+    <div class="article-footer">
+      
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/sysadmin">sysadmin</a>
+    </li>
+    
+    <li>
+        <a href="/tags/devops">devops</a>
+    </li>
+    
+    <li>
+        <a href="/tags/golang">golang</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      
+      
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'btaars';
+    var disqus_identifier = 'http:\/\/blog.btaars.net\/post\/about_logging\/';
+    var disqus_title = 'About logs';
+    var disqus_url = 'http:\/\/blog.btaars.net\/post\/about_logging\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      <div id="pagenavigation-next-prev">
+        
+        <div id="pagenavigation-next">
+          <span class="pagenav-label">Previous</span>
+          <a href="http://blog.btaars.net/post/painful-love/">Painful love</a>
+        </div>
+        
+        
+      </div>
+      
+    </div>
+  </footer>
+</div>
+        </div>
+        <div class="sidebar">
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Author</span>
+    </div>
+    <div id="author">
+      <span>btaars.net</span>
+      <div>
+        
+        <a href="https://twitter.com/ebsarr37"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        <a href="https://github.com/ebsarr"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Categories</span>
+    </div>
+    <div class="categories">
+      <ul>
+        
+        <li>
+          <a href="/categories/golang"><span></span>golang (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/misc"><span></span>misc (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/sysadmin"><span></span>sysadmin (1)</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>RSS</span>
+    </div>
+    <div id="rss">
+      <a href="http://blog.btaars.net/index.xml" type="application/rss+xml" target="_blank">
+        <i class="fa fa-rss-square fa-2x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+      </div>
+      <footer>
+        <div id="site-footer-wrap">
+          <div id="site-footer">
+            <span>Powered by <a href="https://gohugo.io/">Hugo</a>.</span>
+            <span>
+              
+              Copyright (c) 2017, <a href="http://blog.btaars.net/">btaars.net</a>
+              
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
