@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on btaars.net</title>
+    <link>https://blog.btaars.net/categories/</link>
+    <description>Recent content in Categories on btaars.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Coding</title>
+      <link>https://blog.btaars.net/categories/coding/</link>
+      <pubDate>Mon, 26 Mar 2018 00:14:07 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/categories/coding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Misc</title>
+      <link>https://blog.btaars.net/categories/misc/</link>
+      <pubDate>Wed, 10 May 2017 00:05:08 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sysadmin</title>
+      <link>https://blog.btaars.net/categories/sysadmin/</link>
+      <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/categories/sysadmin/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

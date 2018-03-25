@@ -2,28 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on btaars.net</title>
-    <link>http://blog.btaars.net/post/index.xml</link>
+    <link>https://blog.btaars.net/post/</link>
     <description>Recent content in Posts on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 Dec 2017 01:23:06 +0900</lastBuildDate>
-    <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 26 Mar 2018 00:14:07 +0900</lastBuildDate>
+    <atom:link href="/post/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Introducing petitdb</title>
+      <link>https://blog.btaars.net/post/introducing-petitdb.py/</link>
+      <pubDate>Mon, 26 Mar 2018 00:14:07 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/introducing-petitdb.py/</guid>
+      <description>What is petitdb petitdb is a python library that I created a few years ago. As you can guess by the name, it&amp;rsquo;s a library that provides some basic database functionnalities. Under the hood it&amp;rsquo;s just operating on shelves, inside which dicts of dicts are created. Each dict in the shelve is presented as a table, and inside each dict resides another dict that stores key/value pairs.
+Use cases The main reason I wrote this was to store some configurations, mainly hostnames and some others attributes that go with it.</description>
+    </item>
     
     <item>
       <title>About logs</title>
-      <link>http://blog.btaars.net/post/about_logging/</link>
+      <link>https://blog.btaars.net/post/about_logging/</link>
       <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/about_logging/</guid>
+      <guid>https://blog.btaars.net/post/about_logging/</guid>
       <description>I was looking for an article online that explains clearly how to idiomatically do logging in golang. What is the best practice? This is the article that I found by googling golang logging. It turned out not to be how-to article, but rather an opinion about what should developers log when writing their applications. Here are some thoughts about the article. I agree with some of the author&amp;rsquo;s opinions while I don&amp;rsquo;t with others.</description>
     </item>
     
     <item>
       <title>Painful love</title>
-      <link>http://blog.btaars.net/post/painful-love/</link>
+      <link>https://blog.btaars.net/post/painful-love/</link>
       <pubDate>Wed, 10 May 2017 00:05:08 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/painful-love/</guid>
+      <guid>https://blog.btaars.net/post/painful-love/</guid>
       <description>i love you so much, it hurts sometimes
 i think so much about you, i forget to breath sometimes
 i am so full of love for you, but feel so lonely sometimes
@@ -36,19 +46,19 @@ help me babe become sane and clean</description>
     
     <item>
       <title>Creating this blog with Hugo &amp; Github Pages</title>
-      <link>http://blog.btaars.net/post/creating-this-blog/</link>
+      <link>https://blog.btaars.net/post/creating-this-blog/</link>
       <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/creating-this-blog/</guid>
+      <guid>https://blog.btaars.net/post/creating-this-blog/</guid>
       <description>I had time during the new year holidays, so I went online to look for a web framework to develop web applications in golang. I accidently lended on the hugo site and discovered this awesome tool. The concept is very simple: you can easily generate a static website in a few minutes. This was quite different from what I was looking for, but it looked interesting and I decided to give it a try.</description>
     </item>
     
     <item>
       <title>Hello World!</title>
-      <link>http://blog.btaars.net/post/first/</link>
+      <link>https://blog.btaars.net/post/first/</link>
       <pubDate>Mon, 09 Jan 2017 20:06:19 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/first/</guid>
+      <guid>https://blog.btaars.net/post/first/</guid>
       <description>$ printf &amp;quot;%s\n&amp;quot; &#39;Hello, World!&#39; Hello, World!  I&amp;rsquo;m starting a fresh blog site and this is my first post. I&amp;rsquo;ll try my best to post frequently and keep the site alive. A brief introduction I&amp;rsquo;ve been living in Japan for a very long time. I currently work in a Japanese company (been working there for more than a decade now). In the beginning, I&amp;rsquo;ve had the chance to work as a technical support staff for one year.</description>
     </item>
     

@@ -2,18 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Github on btaars.net</title>
-    <link>http://blog.btaars.net/tags/github/index.xml</link>
+    <link>https://blog.btaars.net/tags/github/</link>
     <description>Recent content in Github on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 Jan 2017 00:14:07 +0900</lastBuildDate>
+    <atom:link href="/tags/github/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Creating this blog with Hugo &amp; Github Pages</title>
-      <link>http://blog.btaars.net/post/creating-this-blog/</link>
+      <link>https://blog.btaars.net/post/creating-this-blog/</link>
       <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/creating-this-blog/</guid>
+      <guid>https://blog.btaars.net/post/creating-this-blog/</guid>
       <description>I had time during the new year holidays, so I went online to look for a web framework to develop web applications in golang. I accidently lended on the hugo site and discovered this awesome tool. The concept is very simple: you can easily generate a static website in a few minutes. This was quite different from what I was looking for, but it looked interesting and I decided to give it a try.</description>
     </item>
     

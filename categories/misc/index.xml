@@ -2,18 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Misc on btaars.net</title>
-    <link>http://blog.btaars.net/categories/misc/index.xml</link>
+    <link>https://blog.btaars.net/categories/misc/</link>
     <description>Recent content in Misc on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 May 2017 00:05:08 +0900</lastBuildDate>
+    <atom:link href="/categories/misc/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Painful love</title>
-      <link>http://blog.btaars.net/post/painful-love/</link>
+      <link>https://blog.btaars.net/post/painful-love/</link>
       <pubDate>Wed, 10 May 2017 00:05:08 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/painful-love/</guid>
+      <guid>https://blog.btaars.net/post/painful-love/</guid>
       <description>i love you so much, it hurts sometimes
 i think so much about you, i forget to breath sometimes
 i am so full of love for you, but feel so lonely sometimes

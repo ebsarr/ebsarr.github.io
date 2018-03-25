@@ -2,27 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Golang on btaars.net</title>
-    <link>http://blog.btaars.net/tags/golang/index.xml</link>
+    <link>https://blog.btaars.net/tags/golang/</link>
     <description>Recent content in Golang on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Dec 2017 01:23:06 +0900</lastBuildDate>
+    <atom:link href="/tags/golang/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>About logs</title>
-      <link>http://blog.btaars.net/post/about_logging/</link>
+      <link>https://blog.btaars.net/post/about_logging/</link>
       <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/about_logging/</guid>
+      <guid>https://blog.btaars.net/post/about_logging/</guid>
       <description>I was looking for an article online that explains clearly how to idiomatically do logging in golang. What is the best practice? This is the article that I found by googling golang logging. It turned out not to be how-to article, but rather an opinion about what should developers log when writing their applications. Here are some thoughts about the article. I agree with some of the author&amp;rsquo;s opinions while I don&amp;rsquo;t with others.</description>
     </item>
     
     <item>
       <title>Creating this blog with Hugo &amp; Github Pages</title>
-      <link>http://blog.btaars.net/post/creating-this-blog/</link>
+      <link>https://blog.btaars.net/post/creating-this-blog/</link>
       <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/creating-this-blog/</guid>
+      <guid>https://blog.btaars.net/post/creating-this-blog/</guid>
       <description>I had time during the new year holidays, so I went online to look for a web framework to develop web applications in golang. I accidently lended on the hugo site and discovered this awesome tool. The concept is very simple: you can easily generate a static website in a few minutes. This was quite different from what I was looking for, but it looked interesting and I decided to give it a try.</description>
     </item>
     
