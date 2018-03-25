@@ -11,10 +11,10 @@
     
     <item>
       <title>Introducing petitdb</title>
-      <link>https://blog.btaars.net/post/introducing-petitdb.py/</link>
+      <link>https://blog.btaars.net/post/introducing-petitdb/</link>
       <pubDate>Mon, 26 Mar 2018 00:14:07 +0900</pubDate>
       
-      <guid>https://blog.btaars.net/post/introducing-petitdb.py/</guid>
+      <guid>https://blog.btaars.net/post/introducing-petitdb/</guid>
       <description>What is petitdb petitdb is a python library that I created a few years ago. As you can guess by the name, it&amp;rsquo;s a library that provides some basic database functionnalities. Under the hood it&amp;rsquo;s just operating on shelves, inside which dicts of dicts are created. Each dict in the shelve is presented as a table, and inside each dict resides another dict that stores key/value pairs.
 Use cases The main reason I wrote this was to store some configurations, mainly hostnames and some others attributes that go with it.</description>
     </item>
