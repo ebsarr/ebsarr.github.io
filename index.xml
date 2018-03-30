@@ -16,7 +16,7 @@
       
       <guid>https://blog.btaars.net/post/introducing-petitdb/</guid>
       <description>What is petitdb petitdb is a python library that I created a few years ago. As you can guess by the name, it&amp;rsquo;s a library that provides some basic database functionnalities. Under the hood it&amp;rsquo;s just operating on shelves, inside which dicts of dicts are created. Each dict in the shelve is presented as a table, and inside each dict resides another dict that stores key/value pairs.
-Use cases The main reason I wrote this was to store some configurations, mainly hostnames and some others attributes that go with it.</description>
+Use cases One way I used this library was to store some configurations, mainly hostnames and some others attributes that go with it.</description>
     </item>
     
     <item>

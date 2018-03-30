@@ -95,7 +95,7 @@ ga('send', 'pageview');
 
 <h1 id="use-cases">Use cases</h1>
 
-<p>The main reason I wrote this was to store some configurations, mainly hostnames and some others attributes that go with it. For example, a <code>Host</code> object definition that looked like this in the main script:</p>
+<p>One way I used this library was to store some configurations, mainly hostnames and some others attributes that go with it. For example, a <code>Host</code> object definition that looked like this in the main script:</p>
 
 <pre><code class="language-python">class Host:
     &quot;&quot;&quot;Define a Host object
@@ -117,7 +117,28 @@ ga('send', 'pageview');
                 self.system, self.node)
 </code></pre>
 
-<p>I could store the attributes in a csv file, and everytime the script boots, read and parse the csv, initialize a <code>Host</code> object with every record. The problem I faced with this approach was: if somebody misconfigured the csv file, on the next boot the error could lead to the script not running properly. Using <code>petitdb</code>, I can easily separate the parsing of the configuration file, and the actual processing of the main script. That is, build a function that&rsquo;s purpose is only to read and parse the csv file, store the objects in a shelve using <code>petitdb</code>, and the main script itself would only have to read the configurations from <code>petitdb</code>, not a csv file. In this way I could ensure that when the script runs, it only reads configurations that are already validated and ready to use. OTOH, if the function that reads and parses the csv file(the configuration file) generates any error, the user knows right away that there is something wrong with csv.</p>
+<p>I could store the attributes in a csv file, and everytime the script boots, read and parse the csv, initialize a <code>Host</code> object with every record. The problem I faced with this approach was: if somebody misconfigured the csv file, on the next boot the error could lead to the script not running properly. Using <code>petitdb</code>, I can easily separate the parsing of the configuration file, and the actual processing of the main script. That is, build a function that&rsquo;s purpose is only to read and parse the csv file, store the objects in a shelve using <code>petitdb</code>, and the main script itself would only have to read the configurations from <code>petitdb</code>, not a csv file. In this way I could ensure that when the script runs, it only reads configurations that are already validated and ready to use. OTOH, if the function that reads and parses the csv file(the configuration file) generates any error, the user knows right away that there is something wrong with csv.
+<br><br>
+As <code>petit</code> also provide some convenient methods to update objects, it was quite usefull when counting logs as well. For example, To count records based on the log type and datetime, it&rsquo;s usefull to store the counts in a dict while reading the log records one by one.
+<br>
+The data structure could look like this:</p>
+
+<pre><code class="language-python"># To count errors in the syslog during a certain period of time.
+counter['sys_log_errors'][datetime] = 1
+</code></pre>
+
+<p>Instead of directly manipulating dicts like this, I used <code>petitdb</code>, as it makes incremental operations very convenient with the <code>db.add()</code> method. Example:</p>
+
+<pre><code class="language-python"># Using dicts, this is how we would increment:
+counter['sys_log_errors']['datetime_string'] += 1
+# But in case &quot;counter&quot; is shelve, this would not work, we'd need to retrieve the value first
+current_value = counter['sys_log_errors'][datetime]
+new_value = current_value + 1
+counter['sys_log_errors']['datetime_string'] = new_value
+
+# Using &quot;petit_db&quot;, incrementing is as simple as:
+db.add('sys_log_errors', 'datetime_string', 1)
+</code></pre>
 
 <h1 id="using-petitdb">Using <code>petitdb</code></h1>
 
@@ -141,42 +162,87 @@ You can download it from github:</p>
 <li><code>MemDB</code>: as subclass of <code>SmallDB</code> with no access to shelves, that is everything you do stays in memory.</li>
 </ul>
 
-<p>Looking at the docstring of <code>SmallDB</code> can give you a good idea of what you can do:</p>
+<p><br>
+Data manipulation on a <code>SmallDB</code> or <code>MemDB</code> instance can be done through the following methods:</p>
 
-<pre><code class="language-python">class SmallDB:
-    &quot;&quot;&quot;Interface to store and retreive data or objects from shelve db.
-    A SmallDB object is basically a shelve that can store many dictionnaries.
-    To provide an easy to use interface, the SmallDB object presents the dicts
-    it holds as tables, and each table can store records that consist of a key
-    and a value. 
-    Data manipulation on `SmallDB` objects can be done through the following
-    methods:
-     insert:        insert records
-     update:        replace the value of an existing records
-     add:           convinient method to update records
-     append:        convinient method to update records
-     remove:        remove records
-     create_table:  create tables(dicts)
-     remove_table:  remove tables(dicts)
-    The following methods are also provided to retreive data:
-     select:        retreive records
-     get_tables:    retreive all tables from the object
-     get_keys:      retreive all keys from tables
-    a `SmallDB` object can be instantiated in two modes:
-     - ro: read-only; all methods that try to modify data are not allowed
-           Calling on a method that modifies data will raise a
-           ReadOnlyDatabaseError exception
-     - rw: read-write; all methods are supported.
-     ** The default mode is 'rw'
-     Examples:
-       - create a `SmallDB` object in ro mode: db = SmallDB(filename, 'ro')
-       - create a `SmallDB` object in rw mode: db = SmallDB(filename, 'rw')
-    &quot;&quot;&quot;
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>insert</td>
+<td>insert records</td>
+</tr>
+
+<tr>
+<td>update</td>
+<td>replace the value of an existing records</td>
+</tr>
+
+<tr>
+<td>add</td>
+<td>convinient method to update records</td>
+</tr>
+
+<tr>
+<td>append</td>
+<td>convinient method to update records</td>
+</tr>
+
+<tr>
+<td>remove</td>
+<td>remove records</td>
+</tr>
+
+<tr>
+<td>create_table</td>
+<td>create tables(dicts)</td>
+</tr>
+
+<tr>
+<td>remove_table</td>
+<td>remove tables(dicts)</td>
+</tr>
+</tbody>
+</table>
+
+<p><br>
+And the following methods to retrieve data:</p>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>select</td>
+<td>retreive one singe record</td>
+</tr>
+
+<tr>
+<td>tables</td>
+<td>retreive all tables from the object</td>
+</tr>
+
+<tr>
+<td>keys</td>
+<td>retreive all keys from tables</td>
+</tr>
+</tbody>
+</table>
 
 <h3 id="storing-data">Storing data</h3>
 
-<p>Exmaple illustrated in <code>iptyhon</code>. First declare the <code>Host</code> object.</p>
+<p>Example illustrated in <code>iptyhon</code>. First declare the <code>Host</code> object.</p>
 
 <pre><code class="language-ipython">In [1]: class Host:
    ...:         def __init__(self, hostname, ip, passwd, system, node, login_user):
@@ -272,7 +338,7 @@ In [16]: h.hostname
 Out[16]: 'Hostname1'
 </code></pre>
 
-<p><br><br><br>
+<p><br>
 I&rsquo;ve mainly used this library to store complex configurations to use in some main scripts. It&rsquo;s a very lightweight solution to easily store and manage a small amount of data when writing python scripts.</p>
 
   </div>
