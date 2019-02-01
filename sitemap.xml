@@ -13,11 +13,6 @@
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/post/painful-love/</loc>
-    <lastmod>2017-05-10T00:05:08+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.btaars.net/post/creating-this-blog/</loc>
     <lastmod>2017-01-11T00:14:07+09:00</lastmod>
   </url>
@@ -59,18 +54,6 @@
   <url>
     <loc>https://blog.btaars.net/tags/hugo/</loc>
     <lastmod>2017-01-11T00:14:07+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.btaars.net/categories/misc/</loc>
-    <lastmod>2017-05-10T00:05:08+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.btaars.net/tags/poem/</loc>
-    <lastmod>2017-05-10T00:05:08+09:00</lastmod>
     <priority>0</priority>
   </url>
   
