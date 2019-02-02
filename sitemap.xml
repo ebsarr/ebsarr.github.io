@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.btaars.net/post/work-life-balance/</loc>
+    <lastmod>2019-02-02T21:36:00+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.btaars.net/post/introducing-petitdb/</loc>
     <lastmod>2018-03-26T00:14:07+09:00</lastmod>
   </url>
@@ -58,8 +63,20 @@
   </url>
   
   <url>
+    <loc>https://blog.btaars.net/tags/misc/</loc>
+    <lastmod>2019-02-02T21:36:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.btaars.net/categories/misc/</loc>
+    <lastmod>2019-02-02T21:36:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.btaars.net/post/</loc>
-    <lastmod>2018-03-26T00:14:07+09:00</lastmod>
+    <lastmod>2019-02-02T21:36:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -83,7 +100,7 @@
   
   <url>
     <loc>https://blog.btaars.net/</loc>
-    <lastmod>2018-03-26T00:14:07+09:00</lastmod>
+    <lastmod>2019-02-02T21:36:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   

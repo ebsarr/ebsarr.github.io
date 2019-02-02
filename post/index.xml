@@ -6,8 +6,18 @@
     <description>Recent content in Posts on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Mar 2018 00:14:07 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 02 Feb 2019 21:36:00 +0900</lastBuildDate>
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Work-life balance</title>
+      <link>https://blog.btaars.net/post/work-life-balance/</link>
+      <pubDate>Sat, 02 Feb 2019 21:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/work-life-balance/</guid>
+      <description>The past year has been a very agitated year in my career. Looking back at all the things that went or still going on, I want to take a stop and ask to myself, what am I doing? And most importantly, where am I going ? I made many mistakes, but the biggest one being that I have thought about everything but myself.
+Looking back Two years ago I started managing a team to work on complicated projects involving cross collaboration with other companies.</description>
+    </item>
     
     <item>
       <title>Introducing petitdb</title>
