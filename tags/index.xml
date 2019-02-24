@@ -6,8 +6,26 @@
     <description>Recent content in Tags on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 Dec 2017 01:23:06 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 24 Feb 2019 18:36:00 +0900</lastBuildDate>
     <atom:link href="/tags/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Alibaba Cloud</title>
+      <link>https://blog.btaars.net/tags/alibaba-cloud/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/alibaba-cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Backup</title>
+      <link>https://blog.btaars.net/tags/backup/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/backup/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Devops</title>
@@ -15,6 +33,15 @@
       <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
       
       <guid>https://blog.btaars.net/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ecs</title>
+      <link>https://blog.btaars.net/tags/ecs/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/ecs/</guid>
       <description></description>
     </item>
     
@@ -60,6 +87,24 @@
       <pubDate>Mon, 26 Mar 2018 00:14:07 +0900</pubDate>
       
       <guid>https://blog.btaars.net/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Storage</title>
+      <link>https://blog.btaars.net/tags/storage/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/storage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sysadmin</title>
+      <link>https://blog.btaars.net/tags/sysadmin/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/sysadmin/</guid>
       <description></description>
     </item>
     

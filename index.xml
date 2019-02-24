@@ -6,8 +6,17 @@
     <description>Recent content in btaars.net on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Feb 2019 21:36:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 24 Feb 2019 18:36:00 +0900</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Alibaba Cloud - Cloud Disks Backup and Restore</title>
+      <link>https://blog.btaars.net/post/aliyun-backup-and-restore/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/aliyun-backup-and-restore/</guid>
+      <description>Creating virtual machines on the cloud, regardless of the platform is pretty easy. It is made so easy that you might jump in and fire machines without prior planning. The advantage of the cloud is that you can get started without worrying about initial costs, and scale as needed as your business grows. But this does not mean that you don&amp;rsquo;t have to plan before getting stared. Each Cloud Provider has its own way of providing management features for their products.</description>
+    </item>
     
     <item>
       <title>Work-life balance</title>

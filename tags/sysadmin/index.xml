@@ -2,19 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sysadmin on btaars.net</title>
-    <link>http://blog.btaars.net/tags/sysadmin/index.xml</link>
+    <link>https://blog.btaars.net/tags/sysadmin/</link>
     <description>Recent content in Sysadmin on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/tags/sysadmin/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Feb 2019 18:36:00 +0900</lastBuildDate>
+    <atom:link href="/tags/sysadmin/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>About logs</title>
-      <link>http://blog.btaars.net/post/about_logging/</link>
-      <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
+      <title>Alibaba Cloud - Cloud Disks Backup and Restore</title>
+      <link>https://blog.btaars.net/post/aliyun-backup-and-restore/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
       
-      <guid>http://blog.btaars.net/post/about_logging/</guid>
-      <description>I was looking for an article online that explains clearly how to idiomatically do logging in golang. What is the best practice? This is the article that I found by googling golang logging. It turned out not to be how-to article, but rather an opinion about what should developers log when writing their applications. Here are some thoughts about the article. I agree with some of the author&amp;rsquo;s opinions while I don&amp;rsquo;t with others.</description>
+      <guid>https://blog.btaars.net/post/aliyun-backup-and-restore/</guid>
+      <description>Creating virtual machines on the cloud, regardless of the platform is pretty easy. It is made so easy that you might jump in and fire machines without prior planning. The advantage of the cloud is that you can get started without worrying about initial costs, and scale as needed as your business grows. But this does not mean that you don&amp;rsquo;t have to plan before getting stared. Each Cloud Provider has its own way of providing management features for their products.</description>
     </item>
     
   </channel>

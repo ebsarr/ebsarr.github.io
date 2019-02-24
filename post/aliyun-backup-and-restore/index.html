@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="Hugo 0.38-DEV" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://blog.btaars.net/index.xml" rel="alternate" type="application/rss+xml" title="btaars.net" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    
+    <script src="https://apis.google.com/js/platform.js" async defer>{lang: 'ja'}</script>
+    
+    <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+    <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>Alibaba Cloud - Cloud Disks Backup and Restore | btaars.net</title>
+  </head>
+  <body>
+    <div id="wrap">
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90354151-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+      <header class="site-header">
+        <div class="site-header-left">
+          <a class="site-header-title" href="https://blog.btaars.net/">btaars.net</a>
+        </div>
+      </header>
+      <div class="container">
+        <div id="main">
+
+<div class="article">
+  <header>
+    <div class="article-header">
+      <h1>Alibaba Cloud - Cloud Disks Backup and Restore</h1>
+      <div class="article-meta">
+        <span class="posttime">2019/02/24</span>
+        
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/alibaba-cloud">Alibaba Cloud</a>
+    </li>
+    
+    <li>
+        <a href="/tags/ecs">ecs</a>
+    </li>
+    
+    <li>
+        <a href="/tags/storage">storage</a>
+    </li>
+    
+    <li>
+        <a href="/tags/sysadmin">sysadmin</a>
+    </li>
+    
+    <li>
+        <a href="/tags/backup">backup</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+  </header>
+  <div class="content">
+    
+
+<p>Creating virtual machines on the cloud, regardless of the platform is pretty easy. It is made so easy that you might jump in and fire machines without prior planning. The advantage of the cloud is that you can get started without worrying about initial costs, and scale as needed as your business grows. But this does not mean that you don&rsquo;t have to plan before getting stared. Each Cloud Provider has its own way of providing management features for their products. You should take the time to learn them, and design not only for your application, but also for operating your resources once your services go live. The operation and maintenance part is easily overlooked but I think it is important to deeply think about it during your architecture design process. Opearion and maintenance is wide topic, especially for large scale infrastructures, but today I will focus on disks and data management on Alibaba Cloud.</p>
+
+<h2 id="what-is-a-cloud-disk">What is a Cloud Disk</h2>
+
+<p>From the Alibaba Cloud product documentation.</p>
+
+<blockquote>
+<p>Cloud Disk, which is a block-level data storage product provided by Alibaba Cloud for ECS, uses a multiple distributed system, and features low latency, high performance, persistence, high reliability, and more. Cloud disks can be created, resized, and released at any time.</p>
+</blockquote>
+
+<p>So when creating virtual machines with ECS, Cloud Disk will be basically the disk device for your virtual machine. Every virtual machine that you create must have at least one cloud disk attached and will be used as the system disk. In addition, you can attach up to 16 additional cloud disks as data disks. The system disk is tied to the virtual machine and cannot be detached at will. OTOH, data disks can be attached and detached from any virtual machine. Other notes:</p>
+
+<ul>
+<li>A cloud disk cannot be attahed to multiple virtual machines at the same time, thus does not support simultaneous reads and writes from multiple virtual machines. For this type of needs, you&rsquo;d have to rely on other storage products like Object Storage Service or Network Attached Storage.</li>
+<li>The capacity of a cloud disk goes from 20GiB up to 32,768GiB . When using it as a system disk, the minimum size depends on the operating system you choose for the virtual machine. 20GiB is the minimum for linux systems while 30GiB for windows.</li>
+</ul>
+
+<h2 id="backup-and-restore">Backup and Restore</h2>
+
+<h3 id="snapshots">Snapshots</h3>
+
+<p>Before talking about backup and restore of cloud disks on Alibaba Cloud, we must understand snapshot, as it&rsquo;s the main feature that allows automatic backups of cloud disks. In a nutshell, a snapshot is  a copy of the data on a cloud disk at a specified point in time. The snapshot feature provides the capability to set automatic snapshot policies. This means that you can easily set a backup policy on any cloud disk that you deploy on Alibaba Cloud.
+<br> There are two ways to create snapshots:</p>
+
+<ul>
+<li>manual snapshot: at any point in time, you can manually create a snapshot of a cloud disk.</li>
+<li>automatic snapshot: automatically created based on a snapshot policy.</li>
+</ul>
+
+<p>Snapshot creation may yield a slight decrease in io performance. Based on Alibaba Cloud&rsquo;s official documentation, you can face up to 10% decrease in io performance. Backup policies depend on things such as best practices or security guidelines of your organization, but you must also consider the perfomance impact when designing your backup policy. For example, if your cloud disk stores data of a database, you should consider to avoid creating snapshots in times when there is a high volume of database transactions, as degradation on the disk io performance may impact the database performance.</p>
+
+<h4 id="making-use-of-snapshots">Making use of snapshots</h4>
+
+<p>The last thing that we need to understand before getting started is how we can make use of snapshots. There are 2 ways to use a snapshot:</p>
+
+<ol>
+<li>Restore data to a cloud disk.</li>
+
+<li><p>Create a custom image. Images and custom images are out of the scope of this post, but I&rsquo;ll give a brief introduction anyways. An image is a running environment template for ECS instances. Images allow the provisioning of ECS instances with a preloaded operating system, optionally with additional software and configurations. There are three types of images that you can use on Alibaba Cloud:</p>
+
+<ul>
+<li>public images, which are officially provided by Alibaba Cloud</li>
+<li>custom images, which are created by the end users</li>
+<li>marketplace images, which are created by 3rd party providers and made available through the Alibaba Cloud marketplace.</li>
+</ul></li>
+</ol>
+
+<p>Restoring data to a cloud disk with a snapshot is an easy to understand concept. But what can we do with custom images in terms of backup/restore and why? I&rsquo;ll come back to this later when we talk the details of data restoration.</p>
+
+<h3 id="backing-up-your-disks">Backing up your disks</h3>
+
+<p>As described in the previous sections, disk backup actually equals to creating a shapshot of your disk. You can create a disk snapshot anytime manually, or setup a schedule for automatic snapshots. We will walk through both methods.</p>
+
+<h4 id="manual-snapshot">Manual snapshot</h4>
+
+<p>A walkthrough with a newly created disk.</p>
+
+<p>Verify the target disk ID</p>
+
+<pre><code>$ aliyun ecs DescribeDisks --output cols=DiskId
+</code></pre>
+
+<pre><code>DiskId
+------
+d-6wecl9xdfms5r1vxml07
+</code></pre>
+
+<p>Verify current snapshots of the target disk</p>
+
+<pre><code>$ aliyun ecs DescribeSnapshots --DiskId d-6wecl9xdfms5r1vxml07
+</code></pre>
+
+<pre><code>{
+	&quot;PageNumber&quot;: 1,
+	&quot;TotalCount&quot;: 0,
+	&quot;PageSize&quot;: 10,
+	&quot;RequestId&quot;: &quot;BABE43C3-B759-494D-AB2E-8C4C8CEBC71F&quot;,
+	&quot;Snapshots&quot;: {
+		&quot;Snapshot&quot;: []
+	}
+}
+</code></pre>
+
+<p>At this moment no snapshot exists for this disk. we can create one manually with <code>CreateSnapshot</code> API:</p>
+
+<pre><code>$ aliyun ecs CreateSnapshot --DiskId d-6wecl9xdfms5r1vxml07 --SnapshotName d-6wecl9xdfms5r1vxml07_initial_backup --Description &quot;Very first backup&quot;
+</code></pre>
+
+<pre><code>{
+	&quot;RequestId&quot;: &quot;7469877A-AF3D-47E8-8E5B-22509EDA4D9A&quot;,
+	&quot;SnapshotId&quot;: &quot;s-6we4k062vs82hmgt90pv&quot;
+}
+</code></pre>
+
+<p>Let&rsquo;s verify</p>
+
+<pre><code>$ aliyun ecs DescribeSnapshots --DiskId d-6wecl9xdfms5r1vxml07
+</code></pre>
+
+<pre><code>&quot;Snapshots&quot;: {
+	&quot;Snapshot&quot;: [
+		{
+			&quot;Description&quot;: &quot;Very first backup&quot;,
+			&quot;SnapshotName&quot;: &quot;d-6wecl9xdfms5r1vxml07_initial_backup&quot;,
+			&quot;ProductCode&quot;: &quot;&quot;,
+			&quot;Encrypted&quot;: false,
+			&quot;SourceDiskSize&quot;: 40,
+			&quot;Progress&quot;: &quot;100%&quot;,
+			&quot;Usage&quot;: &quot;none&quot;,
+			&quot;CreationTime&quot;: &quot;2019-02-24T04:11:40Z&quot;,
+			&quot;SourceStorageType&quot;: &quot;disk&quot;,
+			&quot;Tags&quot;: {
+				&quot;Tag&quot;: []
+			},
+			&quot;Status&quot;: &quot;accomplished&quot;,
+			&quot;KMSKeyId&quot;: &quot;&quot;,
+			&quot;SourceDiskType&quot;: &quot;system&quot;,
+			&quot;SourceDiskId&quot;: &quot;d-6wecl9xdfms5r1vxml07&quot;,
+			&quot;SnapshotId&quot;: &quot;s-6we4k062vs82hmgt90pv&quot;
+		}
+	]
+}
+</code></pre>
+
+<p>Manual snapshot, in my point of view is like a check point. You could use it in the following cases:</p>
+
+<ul>
+<li>After initial setup of your ECS instance</li>
+<li>Before deploying new code, or applying a major change to your applications or configurations</li>
+</ul>
+
+<p>As your application keeps running and new data is saved to your disk with time, you would not want to have to periodically create snapshots in this manual way. You could of course create a cron and run the command periodically, but automatic snapshot feature is available and is the right way to go.</p>
+
+<h4 id="automatic-snapshot">Automatic snapshot</h4>
+
+<p>Creating snapshots automatically on a given disk requires two steps and you&rsquo;re done:</p>
+
+<ol>
+<li>Create an automatic snapshot policy</li>
+<li>Apply the automatic snapshot policy to the target disk</li>
+</ol>
+
+<p>An automatic snapshot policy is like a backup policy. There are two things that you need to determine before creating the policy:</p>
+
+<ul>
+<li>The backup schedule: a combination of the weekday and time point for creating automatic snapshots. You can have a policy to take automatic snapshots on a hourly basis every day, or at a specific hour on a specific weekday. Example: Create a snapshot weekly at 00:00 on Sundays.</li>
+<li>The retention time of the snapshot: how long do you want to keep your backups ? You can keep the snapshot permenently, or set a retention period between 1 to 65536 days.</li>
+</ul>
+
+<p><strong>Creating an auto snapshot policy</strong> <br><br>
+You can do so with <code>CreateAutoSnapshotPolicy</code> API</p>
+
+<pre><code>$ aliyun ecs CreateAutoSnapshotPolicy --regionId ap-northeast-1 --repeatWeekdays '[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;]' --timePoints '[&quot;0&quot;]' --retentionDays 30 --autoSnapshotPolicyName dailybackup
+</code></pre>
+
+<pre><code>{
+	&quot;RequestId&quot;: &quot;91972457-966B-43FB-A5EA-41C81E0DAAFF&quot;,
+	&quot;AutoSnapshotPolicyId&quot;: &quot;sp-6we4k062vs82i66zyj8n&quot;
+}
+</code></pre>
+
+<p>Above is a policy that will automatically create a snapshot daily at 00:00. We could change it to hourly snapshot by changing the <code>--timePoints</code> parameter to <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;23&quot;]</code>. Note that <code>--retentionDays</code> is 30 days in this example. This can be set to permenent by changing the parameter to <code>-1</code>. Let&rsquo;s verify our policy:</p>
+
+<pre><code>$ aliyun ecs DescribeAutoSnapshotPolicyEx --AutoSnapshotPolicyId sp-6we4k062vs82i66zyj8n
+</code></pre>
+
+<pre><code>{
+	&quot;PageNumber&quot;: 1,
+	&quot;TotalCount&quot;: 1,
+	&quot;AutoSnapshotPolicies&quot;: {
+		&quot;AutoSnapshotPolicy&quot;: [
+			{
+				&quot;CreationTime&quot;: &quot;2019-02-24 12:54:46&quot;,
+				&quot;Status&quot;: &quot;Normal&quot;,
+				&quot;DiskNums&quot;: 0,
+				&quot;AutoSnapshotPolicyName&quot;: &quot;dailybackup&quot;,
+				&quot;RegionId&quot;: &quot;ap-northeast-1&quot;,
+				&quot;VolumeNums&quot;: 0,
+				&quot;RetentionDays&quot;: 30,
+				&quot;TimePoints&quot;: &quot;[\&quot;0\&quot;]&quot;,
+				&quot;AutoSnapshotPolicyId&quot;: &quot;sp-6we4k062vs82i66zyj8n&quot;,
+				&quot;RepeatWeekdays&quot;: &quot;[\&quot;1\&quot;, \&quot;2\&quot;, \&quot;3\&quot;, \&quot;4\&quot;, \&quot;5\&quot;, \&quot;6\&quot;, \&quot;7\&quot;]&quot;
+			}
+		]
+	},
+	&quot;PageSize&quot;: 10,
+	&quot;RequestId&quot;: &quot;3256603C-7B7E-46C9-AB7F-A9BF9173E2B9&quot;
+}
+</code></pre>
+
+<p>In the console, it looks like this:
+<img src="/img/snapshot-policy.png" alt="alt text" title="A snapshot policy" /></p>
+
+<p><strong>Apply the auto snapshot policy to the target disk</strong> <br><br>
+We can do this <code>ApplyAutoSnapshotPolicy</code> API.</p>
+
+<pre><code>$ aliyun ecs ApplyAutoSnapshotPolicy --autoSnapshotPolicyId sp-6we4k062vs82i66zyj8n --regionId ap-northeast-1 --diskIds '[&quot;d-6wecl9xdfms5r1vxml07&quot;]'
+</code></pre>
+
+<pre><code>{
+	&quot;RequestId&quot;: &quot;8AC003A1-B1C1-4FBA-9E81-39D5208E73B9&quot;
+}
+</code></pre>
+
+<p>You can now verify by checking the policy and the disk description:</p>
+
+<pre><code>$ aliyun ecs DescribeAutoSnapshotPolicyEx --AutoSnapshotPolicyId sp-6we4k062vs82i66zyj8n
+</code></pre>
+
+<pre><code>{
+	&quot;PageNumber&quot;: 1,
+	&quot;TotalCount&quot;: 1,
+	&quot;PageSize&quot;: 10,
+	&quot;AutoSnapshotPolicies&quot;: {
+		&quot;AutoSnapshotPolicy&quot;: [
+			{
+				&quot;CreationTime&quot;: &quot;2019-02-24 12:54:46&quot;,
+				&quot;Status&quot;: &quot;Normal&quot;,
+				&quot;DiskNums&quot;: 1,
+				&quot;AutoSnapshotPolicyName&quot;: &quot;dailybackup&quot;,
+				&quot;RegionId&quot;: &quot;ap-northeast-1&quot;,
+				&quot;VolumeNums&quot;: 0,
+				&quot;RetentionDays&quot;: 30,
+				&quot;TimePoints&quot;: &quot;[\&quot;0\&quot;]&quot;,
+				&quot;AutoSnapshotPolicyId&quot;: &quot;sp-6we4k062vs82i66zyj8n&quot;,
+				&quot;RepeatWeekdays&quot;: &quot;[\&quot;1\&quot;, \&quot;2\&quot;, \&quot;3\&quot;, \&quot;4\&quot;, \&quot;5\&quot;, \&quot;6\&quot;, \&quot;7\&quot;]&quot;
+			}
+		]
+	},
+	&quot;RequestId&quot;: &quot;D9610639-B144-43E1-875E-65D3383027DF&quot;
+}
+</code></pre>
+
+<p><code>&quot;DiskNums&quot;: 1</code> tells us that one disk has been applied to this policy.</p>
+
+<pre><code>$ aliyun ecs DescribeDisks --DiskIds '[&quot;d-6wecl9xdfms5r1vxml07&quot;]'
+</code></pre>
+
+<pre><code>{
+	&quot;PageNumber&quot;: 1,
+	&quot;TotalCount&quot;: 1,
+	&quot;PageSize&quot;: 10,
+	&quot;RequestId&quot;: &quot;135118D7-E5B9-4631-BC70-E3A240D041C0&quot;,
+	&quot;Disks&quot;: {
+		&quot;Disk&quot;: [
+			{
+				&quot;DiskChargeType&quot;: &quot;PostPaid&quot;,
+				&quot;ImageId&quot;: &quot;ubuntu_18_04_64_20G_alibase_20181212.vhd&quot;,
+				&quot;Device&quot;: &quot;/dev/xvda&quot;,
+				&quot;DetachedTime&quot;: &quot;&quot;,
+				&quot;Type&quot;: &quot;system&quot;,
+				&quot;InstanceId&quot;: &quot;i-6we7nc6j9lm4iz6pypmh&quot;,
+				&quot;Encrypted&quot;: false,
+				&quot;ZoneId&quot;: &quot;ap-northeast-1a&quot;,
+				&quot;EnableAutoSnapshot&quot;: true,
+				&quot;AttachedTime&quot;: &quot;2019-02-24T03:49:57Z&quot;,
+				&quot;SourceSnapshotId&quot;: &quot;&quot;,
+				&quot;DeleteAutoSnapshot&quot;: false,
+				&quot;KMSKeyId&quot;: &quot;&quot;,
+				&quot;Size&quot;: 40,
+				&quot;Description&quot;: &quot;&quot;,
+				&quot;Portable&quot;: false,
+				&quot;ProductCode&quot;: &quot;&quot;,
+				&quot;EnableAutomatedSnapshotPolicy&quot;: true,
+				&quot;ResourceGroupId&quot;: &quot;&quot;,
+				&quot;DiskName&quot;: &quot;&quot;,
+				&quot;AutoSnapshotPolicyId&quot;: &quot;sp-6we4k062vs82i66zyj8n&quot;,
+				&quot;CreationTime&quot;: &quot;2019-02-24T03:49:52Z&quot;,
+				&quot;Tags&quot;: {
+					&quot;Tag&quot;: []
+				},
+				&quot;MountInstances&quot;: {
+					&quot;MountInstance&quot;: []
+				},
+				&quot;Status&quot;: &quot;In_use&quot;,
+				&quot;Category&quot;: &quot;cloud_efficiency&quot;,
+				&quot;RegionId&quot;: &quot;ap-northeast-1&quot;,
+				&quot;DeleteWithInstance&quot;: true,
+				&quot;OperationLocks&quot;: {
+					&quot;OperationLock&quot;: []
+				},
+				&quot;ExpiredTime&quot;: &quot;2999-09-08T16:00Z&quot;,
+				&quot;DiskId&quot;: &quot;d-6wecl9xdfms5r1vxml07&quot;
+			}
+		]
+	}
+}
+</code></pre>
+
+<p>The disk description shows us that auto snapshot policy has been applied through the values <code>&quot;EnableAutomatedSnapshotPolicy&quot;: true</code> and <code>&quot;AutoSnapshotPolicyId&quot;: &quot;sp-6we4k062vs82i66zyj8n&quot;</code> .
+<br>From this point, a snapshot of your disk will be created according to the snapshot policy(backup schedule) .</p>
+
+<h3 id="restore">Restore</h3>
+
+<p>You can restore data by doing a disk rollback with <code>ResetDisk</code> API. You only need to specify the target disk ID and snapshot ID. You must note that the source of the snapshot that you specify must be the disk that you are trying to rollback. Meaning you cannot rollback to Disk B with a snapshot created from Disk A. Before performing a rollback, make sure that the ECS instance attached to the disk is stopped.
+<br>If you look at the target disk description, you can identify which ECS instance is attached to it:</p>
+
+<pre><code>$ aliyun ecs DescribeDisks --DiskIds '[&quot;d-6wecl9xdfms5r1vxml07&quot;]' --output cols=InstanceId,DiskId
+</code></pre>
+
+<pre><code>InstanceId             | DiskId
+----------             | ------
+i-6we7nc6j9lm4iz6pypmh | d-6wecl9xdfms5r1vxml07
+</code></pre>
+
+<p>Let&rsquo;s check the instance status</p>
+
+<pre><code>$ aliyun ecs DescribeInstances --InstanceIds '[&quot;i-6we7nc6j9lm4iz6pypmh&quot;]' --output cols=HostName,InstanceId,Status
+</code></pre>
+
+<pre><code>HostName        | InstanceId             | Status
+--------        | ----------             | ------
+ebsarr-ecs-test | i-6we7nc6j9lm4iz6pypmh | Stopped
+</code></pre>
+
+<p>Let&rsquo;s rollback the disk then:
+<br>Identify the snapshot</p>
+
+<pre><code>$ aliyun ecs DescribeSnapshots --DiskId d-6wecl9xdfms5r1vxml07
+</code></pre>
+
+<pre><code>{
+	&quot;PageNumber&quot;: 1,
+	&quot;TotalCount&quot;: 1,
+	&quot;PageSize&quot;: 10,
+	&quot;RequestId&quot;: &quot;98EA4B7E-5E03-45D9-9CE1-6B18D2D33CEE&quot;,
+	&quot;Snapshots&quot;: {
+		&quot;Snapshot&quot;: [
+			{
+				&quot;Description&quot;: &quot;Very first backup&quot;,
+				&quot;SnapshotName&quot;: &quot;d-6wecl9xdfms5r1vxml07_initial_backup&quot;,
+				&quot;ProductCode&quot;: &quot;&quot;,
+				&quot;Encrypted&quot;: false,
+				&quot;SourceDiskSize&quot;: 40,
+				&quot;Progress&quot;: &quot;100%&quot;,
+				&quot;Usage&quot;: &quot;none&quot;,
+				&quot;CreationTime&quot;: &quot;2019-02-24T04:11:40Z&quot;,
+				&quot;SourceStorageType&quot;: &quot;disk&quot;,
+				&quot;Tags&quot;: {
+					&quot;Tag&quot;: []
+				},
+				&quot;Status&quot;: &quot;accomplished&quot;,
+				&quot;KMSKeyId&quot;: &quot;&quot;,
+				&quot;SourceDiskType&quot;: &quot;system&quot;,
+				&quot;SourceDiskId&quot;: &quot;d-6wecl9xdfms5r1vxml07&quot;,
+				&quot;SnapshotId&quot;: &quot;s-6we4k062vs82hmgt90pv&quot;
+			}
+		]
+	}
+}
+</code></pre>
+
+<p>We will rollback using <code>&quot;SnapshotId&quot;: &quot;s-6we4k062vs82hmgt90pv</code> . This is the initial backup created after instance creation.</p>
+
+<pre><code>$ aliyun ecs ResetDisk --DiskId d-6wecl9xdfms5r1vxml07 --SnapshotId s-6we4k062vs82hmgt90pv
+</code></pre>
+
+<pre><code>{
+	&quot;RequestId&quot;: &quot;AFB9FBD7-8BFE-4C8A-8AA6-BAB0D2620D7E&quot;
+}
+</code></pre>
+
+<p>That&rsquo;s it. You can restart your ECS instance and verify the data on the disk.
+<br><br>
+Another way to restore data is to create an image from the snapshot, and then create a new ECS instance with this image. I would not call this restoring data, but rather recovering your ECS instance: you can use this method to recover an ECS instance in case you delete your instance by mistake. So the steps are : 1) Create a custom image from snapshot 2) Create a new ECS instance from the custom image. Let&rsquo;s walk trough the steps
+<br>Creating a custom image from a snapshot</p>
+
+<pre><code>$ aliyun ecs CreateImage --RegionId ap-northeast-1 --SnapshotId s-6we4k062vs82hmgt90pv --ImageName &quot;TestImageFromSnapshot&quot;
+</code></pre>
+
+<pre><code>{
+	&quot;ImageId&quot;: &quot;m-6wecl9xdfms5vjoiu9y8&quot;,
+	&quot;RequestId&quot;: &quot;D229CF0D-605F-4404-B346-7AA76084D1F9&quot;
+}
+</code></pre>
+
+<p>We can verify with <code>DescribeImages</code></p>
+
+<pre><code>$ aliyun ecs DescribeImages --ImageId m-6wecl9xdfms5vjoiu9y8
+</code></pre>
+
+<pre><code>{
+	&quot;PageNumber&quot;: 1,
+	&quot;TotalCount&quot;: 1,
+	&quot;PageSize&quot;: 10,
+	&quot;RegionId&quot;: &quot;ap-northeast-1&quot;,
+	&quot;RequestId&quot;: &quot;3B0E70C6-28BF-4F87-8994-3820E57B30E8&quot;,
+	&quot;Images&quot;: {
+		&quot;Image&quot;: [
+			{
+				&quot;ImageId&quot;: &quot;m-6wecl9xdfms5vjoiu9y8&quot;,
+				&quot;Description&quot;: &quot;&quot;,
+				&quot;ProductCode&quot;: &quot;&quot;,
+				&quot;ResourceGroupId&quot;: &quot;&quot;,
+				&quot;OSType&quot;: &quot;linux&quot;,
+				&quot;Architecture&quot;: &quot;x86_64&quot;,
+				&quot;OSName&quot;: &quot;Ubuntu  18.04 64位&quot;,
+				&quot;DiskDeviceMappings&quot;: {
+					&quot;DiskDeviceMapping&quot;: [
+						{
+							&quot;ImportOSSObject&quot;: &quot;&quot;,
+							&quot;Format&quot;: &quot;&quot;,
+							&quot;Device&quot;: &quot;/dev/xvda&quot;,
+							&quot;Type&quot;: &quot;system&quot;,
+							&quot;SnapshotId&quot;: &quot;s-6we4k062vs82hmgt90pv&quot;,
+							&quot;ImportOSSBucket&quot;: &quot;&quot;,
+							&quot;Progress&quot;: &quot;&quot;,
+							&quot;Size&quot;: &quot;40&quot;
+						}
+					]
+				},
+				&quot;ImageOwnerAlias&quot;: &quot;self&quot;,
+				&quot;Progress&quot;: &quot;100%&quot;,
+				&quot;IsSupportCloudinit&quot;: true,
+				&quot;Usage&quot;: &quot;none&quot;,
+				&quot;CreationTime&quot;: &quot;2019-02-24T09:41:03Z&quot;,
+				&quot;Tags&quot;: {
+					&quot;Tag&quot;: []
+				},
+				&quot;ImageVersion&quot;: &quot;&quot;,
+				&quot;Status&quot;: &quot;Available&quot;,
+				&quot;ImageName&quot;: &quot;TestImageFromSnapshot&quot;,
+				&quot;IsSupportIoOptimized&quot;: true,
+				&quot;IsSelfShared&quot;: &quot;&quot;,
+				&quot;IsCopied&quot;: false,
+				&quot;IsSubscribed&quot;: false,
+				&quot;Platform&quot;: &quot;Ubuntu&quot;,
+				&quot;Size&quot;: 40
+			}
+		]
+	}
+}
+</code></pre>
+
+<p><code>DiskDeviceMappings</code> shows that this image was created from snapshot. You can recover data(the ECS instance) by creating a new instance with this custom image.
+<br><br>
+This post ended up being quite long, but demonstrates that backup/restore on alicloud is very easy to achieve. At the same time, you can see how snapshot is easily powerfull. You&rsquo;d need many tools, storage and servers to this on your own, especially if you run a large infrastructue with hundreds of servers. Also, alicloud provides an API, meaning all of the operations I manually did through the command line for this post can be automated.</p>
+
+  </div>
+  <footer>
+    <div class="article-footer">
+      
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/alibaba-cloud">Alibaba Cloud</a>
+    </li>
+    
+    <li>
+        <a href="/tags/ecs">ecs</a>
+    </li>
+    
+    <li>
+        <a href="/tags/storage">storage</a>
+    </li>
+    
+    <li>
+        <a href="/tags/sysadmin">sysadmin</a>
+    </li>
+    
+    <li>
+        <a href="/tags/backup">backup</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      
+      
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+      <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "btaars" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      <div id="pagenavigation-next-prev">
+        
+        <div id="pagenavigation-next">
+          <span class="pagenav-label">Previous</span>
+          <a href="https://blog.btaars.net/post/work-life-balance/">Work-life balance</a>
+        </div>
+        
+        
+      </div>
+      
+    </div>
+  </footer>
+</div>
+        </div>
+        <div class="sidebar">
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Author</span>
+    </div>
+    <div id="author">
+      <span>btaars.net</span>
+      <div>
+        
+        <a href="https://twitter.com/ebsarr37"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        <a href="https://github.com/ebsarr"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Categories</span>
+    </div>
+    <div class="categories">
+      <ul>
+        
+        <li>
+          <a href="/categories/alibaba-cloud"><span></span>alibaba-cloud (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/coding"><span></span>coding (2)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/ecs"><span></span>ecs (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/misc"><span></span>misc (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/sysadmin"><span></span>sysadmin (1)</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>RSS</span>
+    </div>
+    <div id="rss">
+      <a href="https://blog.btaars.net/index.xml" type="application/rss+xml" target="_blank">
+        <i class="fa fa-rss-square fa-2x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+      </div>
+      <footer>
+        <div id="site-footer-wrap">
+          <div id="site-footer">
+            <span>Powered by <a href="https://gohugo.io/">Hugo</a>.</span>
+            <span>
+              
+              Copyright (c) 2019, <a href="https://blog.btaars.net/">btaars.net</a>
+              
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
