@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="Hugo 0.38-DEV" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://blog.btaars.net/index.xml" rel="alternate" type="application/rss+xml" title="btaars.net" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    
+    <script src="https://apis.google.com/js/platform.js" async defer>{lang: 'ja'}</script>
+    
+    <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+    <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>Getting Started with the aliyun CLI | btaars.net</title>
+  </head>
+  <body>
+    <div id="wrap">
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90354151-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+      <header class="site-header">
+        <div class="site-header-left">
+          <a class="site-header-title" href="https://blog.btaars.net/">btaars.net</a>
+        </div>
+      </header>
+      <div class="container">
+        <div id="main">
+
+<div class="article">
+  <header>
+    <div class="article-header">
+      <h1>Getting Started with the aliyun CLI</h1>
+      <div class="article-meta">
+        <span class="posttime">2019/03/02</span>
+        
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/alibaba-cloud">Alibaba Cloud</a>
+    </li>
+    
+    <li>
+        <a href="/tags/api">api</a>
+    </li>
+    
+    <li>
+        <a href="/tags/cli">cli</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+  </header>
+  <div class="content">
+    
+
+<p>In the previous post, I discussed about backup and restore of cloud disks on Alibaba Cloud. For illustration purpose, I used the <code>aliyun</code> command line interface, but then realized that I haven&rsquo;t described how to get started with the CLI tool.
+<br>
+In this post, I will describe all the steps needed to properly setup and use the CLI.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before moving to the CLI topic, I will spend some time to talk about the Alibaba Cloud account and RAM service. After installation, you need to have a way to authenticate the tool. Alibaba Cloud provides many ways to do so, and the most basic way is to use an access key ID and secret generated from your root account or a RAM user account.</p>
+
+<h3 id="alibaba-cloud-account">Alibaba Cloud account</h3>
+
+<p>The very first step of using Alibaba Cloud is to create an account. This is an easy process that you can complete in 5 minutes online. Currently, Alibaba Cloud has three different portals(sites) and a different account can be created on each portal. However, this does not mean that you have to create an account on each portal. You just need to be aware of the differences between each portal and choose the one that fits your needs:</p>
+
+<ul>
+<li><strong>China portal</strong>: this is portal for Chinese users. All products documentation and console are in Chinese. The currency is RMB, which means all the bills will be in RMB as well. You&rsquo;d have to meet some requirement that are local to China to be able to create and account here. For example, you need to have Chinese mobile phone number.</li>
+<li><strong>International portal</strong>: for users living outside of China, this is the primary destination if you want to use Alibaba Cloud. Everything from product documentation to console is well localized in English, and the main currency is USD. All you&rsquo;ll need to create an account here are a valid email address, mobile phone number and a valid payment method (either a credit card or paypal).</li>
+<li><strong>Japan portal</strong>: this portal is a Japanese version of the international portal, and is intended for Japanese users. It is actually operated by SB Cloud(a joint venture between Alibaba and Softbank), but offers the same products and services as the international portal. JPY is the currency used here, so it is well suited for users living in Japan.</li>
+</ul>
+
+<p>Before choosing to use a portal, you must note that the products offered on each portal are different. The China portal has the most products, but unless you understand Chinese, I don&rsquo;t think you&rsquo;d find your way around the console. The Japanese and international portals try to have the same product line up, although the latter currently has more products.
+<br>
+<br>
+So before getting started, you need to create an account in either one of the portals. I will use my account created on the international portal for demonstration. If you don&rsquo;t have an account already, just go to one of the portals and create one. The steps are straight forward so I won&rsquo;t describe them here.
+<br>
+You can consider the Alibaba Cloud account as a root account. All the cloud resources that you create on the platform will be tied to this account, as well as your billing info. You must make sure not to share the credentials with anybody and keep it secure. You will use this account to login to the console, or generate an access key ID/secret pair to access your cloud resource from API or other tools like the CLI.</p>
+
+<h3 id="ram-user">RAM user</h3>
+
+<p>RAM, which stands for Resource Access Management, is a service that allows you to create sub-accounts from your Alibaba Cloud account, and then manage the permissions for each sub-account. This makes a lot of sense to organizations, where many employees with different roles may access and operate on the infrastructure on the cloud. For individual users, it can serve to protect your root account. Unless necessary, make a habit of accessing your cloud resources with a RAM user. We will walk though how to generate an access key ID/secret pair for a RAM user in the next section.</p>
+
+<h3 id="access-key-id-secret-pair">Access Key ID/Secret pair</h3>
+
+<p>To operate from the API or CLI, you need a valid Access Key ID/Secret pair tied to your root account or RAM user. As mentioned earlier, it is better to use a RAM user. Let&rsquo;s walk through how to generate the AK ID/Secret.</p>
+
+<h4 id="root-account">Root account</h4>
+
+<ol>
+<li>Login to your Alibaba Cloud account and go to the console
+<br><br></li>
+<li>Click on the <code>AccessKey</code> menu the <code>My account</code> menu
+<br><br>
+<img src="/img/AKMenu.png" alt="AK Menu" />
+<br><br></li>
+<li>Choose <code>Continue to manage AccessKey</code> from the popup
+<br><br>
+<img src="/img/continue-ak.png" alt="AK Continue" />
+<br><br></li>
+<li>In the &ldquo;Security Manangement&rdquo; page, click on <code>Create AccessKey</code> to create a pair of AK ID and secret.
+<br><br>
+<img src="/img/create-ak.png" alt="Create AK" />
+<br><br></li>
+<li>That&rsquo;s it. The pair is ready; you can click on <code>Save AccessKey information</code> in the popup to download the pair in a csv format.
+<br><br>
+<img src="/img/save-ak.png" alt="Save AK" /></li>
+</ol>
+
+<h4 id="ram-user-1">RAM user</h4>
+
+<p>RAM has many features that will not be discussed in this post. For the purpose of using the CLI, I will just go through the most basic steps of creating a RAM user, granting it permissions and creating a AK ID/Secret pair for that user. You can refer to the RAM documentation for more information on this topic. I may post another article to go through the basics of RAM.
+<br><br></p>
+
+<ol>
+<li>Login to the Alibaba Cloud console top and access the RAM console
+<br><br>
+<img src="/img/click-ram.png" alt="Open RAM" />
+<br><br></li>
+<li>In the RAM console, open the &ldquo;USers&rdquo; tab
+<br><br>
+<img src="/img/ram-open-user-tab.png" alt="Open Users tab" />
+<br><br></li>
+<li>In the &ldquo;Users&rdquo; page, click on <code>Create User</code> button to create a new RAM user
+<br><br>
+<img src="/img/click-create-user.png" alt="Click create user" />
+<br><br></li>
+<li>In the &ldquo;Create User&rdquo; Menu, enter the logon name, display name and choose the <code>Programmatic Access</code> check box for the &ldquo;Access mode&rdquo;. Since we only want to use the CLI, it&rsquo;s not necessary to enable <code>Console Password Logon</code>.
+<br><br>
+<img src="/img/ram-create-user.png" alt="Click create user" />
+<br><br></li>
+<li>You can see the newly created user information. Click on <code>Donwload CSV file</code> to donwload the AK ID and secret in a CSV. If you don&rsquo;t copy or download those information at this stage, you won&rsquo;t be able to obtain the secret of the newly create AK.
+<br><br>
+<img src="/img/ram-user-information.png" alt="RAM user information" />
+<br><br></li>
+</ol>
+
+<p>We do have the AK ID/secret of our RAM user. But since this user does not have any permission granted yet, you won&rsquo;t be able to operate on your cloud resources with it. We need to grant a permission first. The following steps will grant root access to this RAM user. When granting permissions to RAM users, best practice is to grant the least powerful permission needed for that user.</p>
+
+<ol>
+<li>Return to the &ldquo;Users&rdquo; page to view the user list. On the record of our targer user, click on <code>Grant permisson</code>
+<br><br>
+<img src="/img/ram-click-grant-permission.png" alt="RAM click grant permission" />
+<br><br></li>
+<li>In the &ldquo;Add Permisson&rdquo; page, select <code>AdministratorAccess</code> and click <code>OK</code>
+<br><br>
+<img src="/img/ram-add-permission.png" alt="RAM add permission" />
+<br><br></li>
+<li>Verify the success message and click <code>Finished</code>
+<br><br>
+<img src="/img/ram-add-permission-success.png" alt="RAM add permission success" />
+<br><br></li>
+</ol>
+
+<p>We are all set. I described the steps to obtain the AK ID/Secret pair for both the root account (Alibaba Cloud) account and the RAM user. However, I advise that you don&rsquo;t create the AK of the root account at all, but rather use the RAM user.</p>
+
+<h2 id="getting-started-with-the-aliyun-cli">Getting started with the <code>aliyun</code> CLI</h2>
+
+<p>We are finally back to our main topic, the CLI. I will describe the installation, initial setup, command line syntax and some basic tips to get started.</p>
+
+<h3 id="installing-aliyun">Installing <code>aliyun</code></h3>
+
+<p>The <code>aliyun</code> CLI is built in go. You can either download the precompile executable, or compile from source.</p>
+
+<h4 id="download-executable">Download executable</h4>
+
+<p>Go to the github repo and click on your platform to donwload
+<br><br>
+<img src="/img/cli-donwload.png" alt="download cli" />
+<br><br>
+As stated here, it&rsquo;s the recommended way to install. After downloading, unpack the file, go to the download directory and move the executable file into a directory in your path. On the linux or mac, <code>/usr/local/bin</code> is the recommended target.
+<br>Example on mac</p>
+
+<pre><code class="language-sh">$ sudo mv aliyun /usr/local/bin
+</code></pre>
+
+<p>You can test your installation by checking the version</p>
+
+<pre><code class="language-sh">$ aliyun version
+</code></pre>
+
+<pre><code>3.0.10
+</code></pre>
+
+<h4 id="compile-from-source">Compile from source</h4>
+
+<p>Follow the steps in the github README. You need to configure go first.</p>
+
+<pre><code class="language-sh">$ mkdir -p $GOPATH/src/github.com/aliyun
+$ cd $GOPATH/src/github.com/aliyun
+$ git clone http://github.com/aliyun/aliyun-cli.git
+$ git clone http://github.com/aliyun/aliyun-openapi-meta.git
+$ cd aliyun-cli
+$ make install
+</code></pre>
+
+<h3 id="aliyun-setup"><code>aliyun</code> setup</h3>
+
+<p>Now that we have installed the too, we need to do one initial setup, which is configuring a profile. A profile consists of the user AK for authentication, default region and language. Region in this context is the Alibaba Cloud region for your cloud resources. We use the <code>configure</code> command to configure a new profile. Prepare your the AK information of the just created RAM user.</p>
+
+<pre><code class="language-sh">$ aliyun configure
+</code></pre>
+
+<pre><code>Configuring profile '' in '' authenticate mode...
+Access Key Id []: xxx
+Access Key Secret []: xxx
+Default Region Id []: ap-northeast-1
+Default Output Format [json]: json (Only support json))
+Default Language [zh|en] en: en
+Saving profile[] ...Done.
+</code></pre>
+
+<p>Enter your Access Key Id/Secret(not shown here), default region and preferred language when prompted.
+<br>You can configure multiple profiles and give a name to each profile to separate them by using the <code>-p</code> flag:</p>
+
+<pre><code class="language-sh">$ aliyun configure -p root
+</code></pre>
+
+<p>The profile name will be <code>root</code>. When submitting commands, you can authenticate with the <code>root</code> profile name with the <code>-p</code> flag:</p>
+
+<pre><code>$ aliyun ecs DescribeInstances -p root
+</code></pre>
+
+<p>Listing instaces with the <code>root</code> profile.
+<br>
+You can also configure a provile in non-interactive mode with the <code>configure set</code> command:</p>
+
+<pre><code class="language-sh">$ aliyun configure set \
+	-p admin \
+	--mode AK \
+	--access-key-id xxx \
+	--access-key-secret xxx \
+	--region ap-northeast-1 \
+	--language en
+</code></pre>
+
+<p>Configuring a profile named <code>admin</code>.
+<br>You can delete a configured profile with the <code>configure delete</code> command:</p>
+
+<pre><code class="language-sh">$ aliyun configure delete -p root
+</code></pre>
+
+<p><br>Finally, you can view your configured profiles with the <code>configure list</code> command:</p>
+
+<pre><code class="language-sh">$ aliyun configure list
+</code></pre>
+
+<pre><code>Profile   | Credential         | Valid   | Region           | Language
+--------- | ------------------ | ------- | ---------------- | --------
+default   | AK:***HnT          | Valid   | cn-hangzhou      |
+admin *   | AK:***8NN          | Valid   | ap-northeast-1   | en
+</code></pre>
+
+<p>&ldquo;*&rdquo; Sign near the profile name means the active profile: If you don&rsquo;t submit the <code>-p</code> flag to <code>aliyun</code> commands, this profile will be used.</p>
+
+<h3 id="aliyun-command-syntax"><code>aliyun</code> command syntax</h3>
+
+<p>Type <code>aliyun help</code> to see the syntax:</p>
+
+<pre><code class="language-sh">$ aliyun help
+</code></pre>
+
+<pre><code>Alibaba Cloud Command Line Interface Version 3.0.10
+
+Usage:
+  aliyun &lt;product&gt; &lt;operation&gt; [--parameter1 value1 --parameter2 value2 ...]
+</code></pre>
+
+<p>&ldquo;product&rdquo; means the Alibaba Cloud product you want to access from the CLI, and &ldquo;operation&rdquo; stands for the API your are trying to access. Example:</p>
+
+<pre><code class="language-sh">$ aliyun ecs DescribeInstances
+</code></pre>
+
+<p>Accessing the <code>DescribeInstances</code> API of the <code>ecs</code> product. You can view the list of products accessible from the CLI in the help with <code>aliyun help</code>, and also the list of APIs(operations) available for each product with <code>aliyun &lt;product&gt; help</code>.
+Regarding the parameters, you can check the available parameters for each API with <code>aliyun &lt;product&gt; &lt;operation&gt; help</code>:</p>
+
+<pre><code class="language-sh">$ aliyun ecs AddTags help
+</code></pre>
+
+<pre><code>Alibaba Cloud Command Line Interface Version 3.0.10
+
+Product: Ecs (Elastic Compute Service)
+Link:    https://help.aliyun.com/api/ecs/AddTags.html
+
+Parameters:
+  --RegionId     String  Required
+  --ResourceId   String  Required
+  --ResourceType String  Required
+  --Tag.n.Key    String  Optional
+  --Tag.n.Value  String  Optional
+  --Tag.n.key    String  Optional
+  --Tag.n.value  String  Optional
+</code></pre>
+
+<p>To actually get a full understanding of what the API(operation) does and the meaning of each parameter, you must consult the official API documentation. The help of the CLI only tells you how to use the CLI and does not provide any explanation of the API itself.
+<br>Referring to the previous post about backups, here is a full exmaple of using the CLI:</p>
+
+<pre><code>$ aliyun ecs CreateAutoSnapshotPolicy \
+	--regionId ap-northeast-1 \
+	--repeatWeekdays '[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;]' \
+	--timePoints '[&quot;0&quot;]' \
+	--retentionDays 30 \
+	--autoSnapshotPolicyName dailybackup
+</code></pre>
+
+<p>You can see that we follow the syntax described above with the <code>product:ecs</code>, <code>operation:CreateAutoSnapshotPolicy</code> followed by multiple parameters.</p>
+
+<h3 id="tips-modifying-the-output">Tips: Modifying the output</h3>
+
+<p>The default output format of <code>aliyun</code> is json. Unless you want to use the json output as an input to another program, you may sometimes want to see the results in a more human readable way. The <code>--output</code> flag helps us do that: it can select only the values that you are interested in, and in addition display them as a table. The parameter to this flag should have the format <code>cols=item1,item2</code> where <code>item1</code> and <code>item2</code> are the json fields that you want to select. Example:</p>
+
+<pre><code class="language-sh">$ aliyun ecs DescribeInstances \
+	--InstanceIds '[&quot;i-6we7nc6j9lm4iz6pypmh&quot;]' \
+	--output cols=HostName,InstanceId,Status
+</code></pre>
+
+<p><code>DescribeInstances</code> would normally dispaly a very long json string with many many fields. In the above command, we are selecting only the fields that interest us: <code>HostName</code>, <code>InstanceId</code> and <code>Status</code>. The result looks like this:</p>
+
+<pre><code>HostName        | InstanceId             | Status
+--------        | ----------             | ------
+ebsarr-ecs-test | i-6we7nc6j9lm4iz6pypmh | Stopped
+</code></pre>
+
+<p>That&rsquo;s it for today. With the information provided in this post, I hope everyone can have a basic undertanding of Alibaba Cloud portals, accounts/RAM users and get started with the CLI.
+<br>ではでは、おやすみなさい（あ、夜は今だけか。。。）</p>
+
+  </div>
+  <footer>
+    <div class="article-footer">
+      
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/alibaba-cloud">Alibaba Cloud</a>
+    </li>
+    
+    <li>
+        <a href="/tags/api">api</a>
+    </li>
+    
+    <li>
+        <a href="/tags/cli">cli</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      
+      
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+  </ul>
+</div>
+
+
+      <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "btaars" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      <div id="pagenavigation-next-prev">
+        
+        <div id="pagenavigation-next">
+          <span class="pagenav-label">Previous</span>
+          <a href="https://blog.btaars.net/post/aliyun-backup-and-restore/">Alibaba Cloud - Cloud Disks Backup and Restore</a>
+        </div>
+        
+        
+      </div>
+      
+    </div>
+  </footer>
+</div>
+        </div>
+        <div class="sidebar">
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Author</span>
+    </div>
+    <div id="author">
+      <span>btaars.net</span>
+      <div>
+        
+        <a href="https://twitter.com/ebsarr37"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        <a href="https://github.com/ebsarr"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Categories</span>
+    </div>
+    <div class="categories">
+      <ul>
+        
+        <li>
+          <a href="/categories/alibaba-cloud"><span></span>alibaba-cloud (2)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/coding"><span></span>coding (2)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/ecs"><span></span>ecs (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/misc"><span></span>misc (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/sysadmin"><span></span>sysadmin (1)</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>RSS</span>
+    </div>
+    <div id="rss">
+      <a href="https://blog.btaars.net/index.xml" type="application/rss+xml" target="_blank">
+        <i class="fa fa-rss-square fa-2x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+      </div>
+      <footer>
+        <div id="site-footer-wrap">
+          <div id="site-footer">
+            <span>Powered by <a href="https://gohugo.io/">Hugo</a>.</span>
+            <span>
+              
+              Copyright (c) 2019, <a href="https://blog.btaars.net/">btaars.net</a>
+              
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
