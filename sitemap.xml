@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.btaars.net/post/shell-scripting-tips-part1/</loc>
+    <lastmod>2019-03-05T20:47:00+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.btaars.net/post/shell-scripting-tips-part1/</loc>
+    <lastmod>2019-03-05T20:47:00+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.btaars.net/post/getting-started-with-aliyuncli/</loc>
     <lastmod>2019-03-02T17:21:59+09:00</lastmod>
   </url>
@@ -74,8 +84,14 @@
   </url>
   
   <url>
+    <loc>https://blog.btaars.net/tags/coding/</loc>
+    <lastmod>2019-03-05T20:47:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.btaars.net/categories/coding/</loc>
-    <lastmod>2018-03-26T00:14:07+09:00</lastmod>
+    <lastmod>2019-03-05T20:47:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -129,13 +145,19 @@
   
   <url>
     <loc>https://blog.btaars.net/post/</loc>
-    <lastmod>2019-03-02T17:21:59+09:00</lastmod>
+    <lastmod>2019-03-05T20:47:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.btaars.net/tags/python/</loc>
     <lastmod>2018-03-26T00:14:07+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.btaars.net/tags/sh/</loc>
+    <lastmod>2019-03-05T20:47:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -165,7 +187,7 @@
   
   <url>
     <loc>https://blog.btaars.net/</loc>
-    <lastmod>2019-03-02T17:21:59+09:00</lastmod>
+    <lastmod>2019-03-05T20:47:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   

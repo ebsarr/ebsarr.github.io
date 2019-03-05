@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Coding on btaars.net</title>
-    <link>https://blog.btaars.net/categories/coding/</link>
+    <link>https://blog.btaars.net/tags/coding/</link>
     <description>Recent content in Coding on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 05 Mar 2019 20:47:00 +0900</lastBuildDate>
-    <atom:link href="/categories/coding/" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/coding/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Shell Scripting Tips - Part1</title>
@@ -25,25 +25,6 @@
       
       <guid>https://blog.btaars.net/post/shell-scripting-tips-part1/</guid>
       <description>It&amp;rsquo;s been a while since the last time I wrote a shell script. A few years ago I had to automate many tasks for managing thousands of servers. This made me write many scripts for many purposes, like running a sanity check on a set of clusters, collecting and analysing logs or automating deployment of configurations across a set of hundreds of servers. I ended up with many tools at hand, and needed a way to productively write new tools, and also reuse the codes common to all the scripts etc &amp;hellip; In this post I will share the few practices that I applied when writing my scripts.</description>
-    </item>
-    
-    <item>
-      <title>Introducing petitdb</title>
-      <link>https://blog.btaars.net/post/introducing-petitdb/</link>
-      <pubDate>Mon, 26 Mar 2018 00:14:07 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/post/introducing-petitdb/</guid>
-      <description>What is petitdb petitdb is a python library that I created a few years ago. As you can guess by the name, it&amp;rsquo;s a library that provides some basic database functionnalities. Under the hood it&amp;rsquo;s just operating on shelves, inside which dicts of dicts are created. Each dict in the shelve is presented as a table, and inside each dict resides another dict that stores key/value pairs.
-Use cases One way I used this library was to store some configurations, mainly hostnames and some others attributes that go with it.</description>
-    </item>
-    
-    <item>
-      <title>Creating this blog with Hugo &amp; Github Pages</title>
-      <link>https://blog.btaars.net/post/creating-this-blog/</link>
-      <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/post/creating-this-blog/</guid>
-      <description>I had time during the new year holidays, so I went online to look for a web framework to develop web applications in golang. I accidently lended on the hugo site and discovered this awesome tool. The concept is very simple: you can easily generate a static website in a few minutes. This was quite different from what I was looking for, but it looked interesting and I decided to give it a try.</description>
     </item>
     
   </channel>
