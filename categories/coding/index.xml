@@ -5,7 +5,6 @@
     <description>Recent content in coding on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-<<<<<<< HEAD
     <lastBuildDate>Wed, 28 Aug 2019 23:53:59 +0900</lastBuildDate>
     <atom:link href="/categories/coding/" rel="self" type="application/rss+xml" />
     
@@ -24,17 +23,6 @@
       <pubDate>Sun, 03 Mar 2019 17:23:47 +0900</pubDate>
       
       <guid>https://blog.btaars.net/post/shell-scripting-tips/</guid>
-=======
-    <lastBuildDate>Tue, 05 Mar 2019 20:47:00 +0900</lastBuildDate>
-    <atom:link href="/categories/coding/" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>Shell scripting Tips - Part1</title>
-      <link>https://blog.btaars.net/post/shell-scripting-tips-part1/</link>
-      <pubDate>Tue, 05 Mar 2019 20:47:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/post/shell-scripting-tips-part1/</guid>
->>>>>>> 115fac469bf80af01b65d553fc92d8b90ad8bd17
       <description>It&amp;rsquo;s been a while since the last time I wrote a shell script. A few years ago I had to automate many tasks for managing thousands of servers. This made me write many scripts for many purposes, like running a sanity check on a set of clusters, collecting and analysing logs or automating deployment of configurations across a set of hundreds of servers. I ended up with many tools at hand, and needed a way to productively write new tools, and also reuse the codes common to all the scripts etc &amp;hellip; In this post I will share the few practices that I applied when writing my scripts.</description>
     </item>
     

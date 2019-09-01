@@ -63,24 +63,9 @@
     </item>
     
     <item>
-<<<<<<< HEAD
       <title>backup</title>
       <link>https://blog.btaars.net/tags/backup/</link>
       <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
-=======
-      <title>Coding</title>
-      <link>https://blog.btaars.net/tags/coding/</link>
-      <pubDate>Tue, 05 Mar 2019 20:47:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/coding/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Devops</title>
-      <link>https://blog.btaars.net/tags/devops/</link>
-      <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
->>>>>>> 115fac469bf80af01b65d553fc92d8b90ad8bd17
       
       <guid>https://blog.btaars.net/tags/backup/</guid>
       <description></description>
@@ -132,24 +117,9 @@
     </item>
     
     <item>
-<<<<<<< HEAD
       <title>devops</title>
       <link>https://blog.btaars.net/tags/devops/</link>
       <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
-=======
-      <title>Sh</title>
-      <link>https://blog.btaars.net/tags/sh/</link>
-      <pubDate>Tue, 05 Mar 2019 20:47:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/sh/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Storage</title>
-      <link>https://blog.btaars.net/tags/storage/</link>
-      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
->>>>>>> 115fac469bf80af01b65d553fc92d8b90ad8bd17
       
       <guid>https://blog.btaars.net/tags/devops/</guid>
       <description></description>
