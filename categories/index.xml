@@ -18,9 +18,15 @@
     </item>
     
     <item>
+<<<<<<< HEAD
       <title>golang</title>
       <link>https://blog.btaars.net/categories/golang/</link>
       <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
+=======
+      <title>Coding</title>
+      <link>https://blog.btaars.net/categories/coding/</link>
+      <pubDate>Tue, 05 Mar 2019 20:47:00 +0900</pubDate>
+>>>>>>> 115fac469bf80af01b65d553fc92d8b90ad8bd17
       
       <guid>https://blog.btaars.net/categories/golang/</guid>
       <description></description>
