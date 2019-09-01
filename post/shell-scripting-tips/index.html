@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="Hugo 0.55.0-DEV" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://blog.btaars.net/index.xml" rel="alternate" type="application/rss+xml" title="btaars.net" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    
+    <script src="https://apis.google.com/js/platform.js" async defer>{lang: 'ja'}</script>
+    
+    <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+    <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>Shell scripting tips | btaars.net</title>
+  </head>
+  <body>
+    <div id="wrap">
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90354151-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+      <header class="site-header">
+        <div class="site-header-left">
+          <a class="site-header-title" href="https://blog.btaars.net/">btaars.net</a>
+        </div>
+      </header>
+      <div class="container">
+        <div id="main">
+
+<div class="article">
+  <header>
+    <div class="article-header">
+      <h1>Shell scripting tips</h1>
+      <div class="article-meta">
+        <span class="posttime">2019/03/03</span>
+        
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/sh">sh</a>
+    </li>
+    
+    <li>
+        <a href="/tags/coding">coding</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+    
+  </ul>
+</div>
+
+
+  </header>
+  <div class="content">
+    
+
+<p>It&rsquo;s been a while since the last time I wrote a shell script. A few years ago I had to automate many tasks for managing thousands of servers. This made me write many scripts for many purposes, like running a sanity check on a set of clusters, collecting and analysing logs or automating deployment of configurations across a set of hundreds of servers. I ended up with many tools at hand, and needed a way to productively write new tools, and also reuse the codes common to all the scripts etc &hellip;
+<br>
+In this post I will share the few practices that I applied when writing my scripts. I would not say it&rsquo;s best practice, it just did work for me. They are not all my creation, I took reference from some other people&rsquo;s scipts over the years, and some from shell scripting books.</p>
+
+<h3 id="functions">Functions</h3>
+
+<p>Using functions was my basic way of achieving code reuse. I designed my functions across all scripts to do one specific thing, and then composed all the scripts with just the logic to call the functions. Another advantage of doing this is that it made it easier to debug the scripts in case I run into an issue. As I was writing code for automating tasks on a large sclage infrastructure, scripts could tend to be very long, so using functions helped a lot for code clarity. When designing the scripts, the first thing that I prioritized was how to isolate code by using functions.
+<br>
+I followed a coding guideline for functions, with only three basic rules:</p>
+
+<h4 id="function-names">Function names</h4>
+
+<p>Always put the prefix &ldquo;func_&rdquo; followed by a name that describes what the function does. One example:</p>
+
+<pre><code class="language-sh">func_panic () {
+# Print error message to stderr and exit with error code
+# @params:
+#	${*}: error message
+# @output:
+#	stdout:	none
+#	stderr:	error message
+# @return: none. This function will exit the program with error code ${RC_ERROR}
+
+	message=${*}
+	printf &quot;%s\n&quot; &quot;${message}&quot; 1&gt;&amp;2
+	exit ${RC_ERROR}
+}
+</code></pre>
+
+<p>The reason to prefix all function names with <code>func_</code> is to differenciate them from other utilities or commands that you call from your script. If I named the function above just <code>panic</code>, you would see somewhere in the main script a function call like</p>
+
+<pre><code>panic &quot;Exception occured&quot;
+</code></pre>
+
+<p>Well, one would think that <code>panic</code> is a command or a bash function like <code>echo</code> or <code>printf</code>. Prefixing the function names with <code>func_</code> help quickly differentiate my functions and other commands.</p>
+
+<h4 id="function-documentation">Function documentation</h4>
+
+<p>At the top of the function, include comments describing the function&rsquo;s purpose, expected input parameters, output and return codes. You may have notice in the previous example how the function was documented. Here is another example:</p>
+
+<pre><code class="language-sh">func_delete_files () {
+# Delete files one by one.
+# Only files under ${BASE_DIR} will be deleted.
+# Function will abort if it fails to delete one of the files.
+# @params:
+#	${*}: list of files(full path) to delete.
+# @output:
+#	stdout:	none
+#	stderr:	error message
+# @return:
+#	${RC_SUCCESS}:	everything went file
+#	${RC_ERROR}:	Failed to delete a file
+
+	files=${*}
+	for file in ${files}; do
+		echo ${file} | grep ${BASE_DIR} &amp;&amp; rm ${file} || \
+			echo &quot;Failed to delete or cannot delete files outside of ${BASE_DIR}&quot; 1&gt;&amp;2 &amp;&amp; return ${RC_ERROR}
+	done
+	return ${RC_SUCCESS}
+}
+</code></pre>
+
+<p>Other people read your code. Even if you are the only one writing and maintaining the code, you will some day need to read the code. In my point of view, shell syntax is not very readable in the first place. So for at least isolated codes like functions, I think it is best practice to write some guidance about what the function does, what it expects as input parameter and so on. You&rsquo;ll thank yourself the day you come back and read a well documented function code that you wrote six month ago; at least I did&hellip;</p>
+
+<h4 id="function-output-and-return-codes">Function output and return codes</h4>
+
+<p>Since the <code>return</code> statement in shell scripts can only return codes, I made a habit of using <code>stdout</code> as a function return value as well. What I mean is I took advantage of the fact that you can pipe your function output as input to other programs. Everything that I printed to <code>stdout</code> inside a function should make sense to another program. Otherwise I did not print anything at all, or used <code>stderr</code> for sending information and warnings. Example:</p>
+
+<pre><code class="language-sh">func_create_tmpfile () {
+# Create and return a temp file
+# @params: none
+# @output:
+#	stdout:	filename of temp file
+#	stderr:	error message
+# @return:
+#	${RC_SUCCESS}:	everything went file
+#	${RC_ERROR}:	Failure
+
+	tmpfile=${TEMP_DIR}/${SELF}_`date +&quot;%s&quot;`.tmp
+	touch ${tmpfile} || return ${RC_ERROR}
+	printf &quot;%s&quot; &quot;${tmpfile}&quot; # This can be treated as a return value
+	return ${RC_SUCCESS}
+}
+
+# We can call this function to create a temp file and get the filename
+TMP_FILE=$( func_create_tmpfile ) 
+</code></pre>
+
+<p>You may have noticed that I always use the <code>return</code> statement in functions. Not having a <code>return</code> statement will not make your function fail or anything, but I also made it a habit to return error codes to specifically declare success or failure of the function execution. After a function call, the caller can do a simple check like with any other command:</p>
+
+<pre><code class="language-sh">func_xxx # function call
+if [ $? -ne ${RC_SUCCESS} ]; then
+	# The function failed; do something
+fi
+</code></pre>
+
+<h3 id="common-modules-and-file-structure">Common modules and file structure</h3>
+
+<p>After writing a few scripts, I realized that there were common tasks that I had to rewrite. Since those scripts were written at different times, I ended up with different codes doing the same thing. In addition to this, log files and temporary files were handled differently in different scripts. I decided to group all the common stuffs in on script file, and reuse the file every time that I need to write a new script. Below are the things that I achieved doing this.</p>
+
+<h4 id="standard-directory-and-file-structure">Standard directory and file structure</h4>
+
+<p>I usually had to deal with three types of files with my scripts:</p>
+
+<ul>
+<li>Configuration files</li>
+<li>Log files</li>
+<li>Temporary files</li>
+</ul>
+
+<p>In addition to this, many of the scripts has to be deployed and executed on many servers. I decided to create a standard environment for all the scripts, and this meant to standardize how files and directories where structured. The standard deployement looked like this:</p>
+
+<pre><code class="language-sh"># script install directory
+BASE_DIR=&quot;&quot; # &lt;-- decide a location for all scripts
+
+# Script file
+SELF=${BASE_DIR}/`basename ${0}`
+
+# directory to store all the scripts configuration files
+CONFIG_DIR=${BASE_DIR}/config
+
+# configuration file of script_name.sh
+SELF=${BASE_DIR}/${CONFIG_DIR}/
+
+# directory to store temporary files
+TEMP_DIR=${BASE_DIR}/temp
+
+# directory to store log files
+LOG_DIR=${BASE_DIR}/logs/script_name.d
+
+# log file for script_name.sh
+LOG_FILE=${BASE_DIR}/${LOG_DIR}/script_name.log
+</code></pre>
+
+<p>Following this standard for all my scripts came with benefits:</p>
+
+<ul>
+<li>You don&rsquo;t need to rethink basic stuffs like where to store your configuration files or log files</li>
+<li>You always know where your files are</li>
+<li>Having a standard <code>${BASE_DIR}</code> can help isolate your scripts environment from other system files, thus helps you enforce rules such as &ldquo;never delete a file outside of <code>${BASE_DIR}</code>&rdquo;. Especially when working on business critical systems, deleting a file by mistake, or due to a bug in your script is very dangerous. This rule helped me avoid those types of accidents.</li>
+</ul>
+
+<h4 id="common-module">Common module</h4>
+
+  </div>
+  <footer>
+    <div class="article-footer">
+      
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/sh">sh</a>
+    </li>
+    
+    <li>
+        <a href="/tags/coding">coding</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      
+      
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+    
+  </ul>
+</div>
+
+
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "btaars" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      <div id="pagenavigation-next-prev">
+        
+        <div id="pagenavigation-next">
+          <span class="pagenav-label">Previous</span>
+          <a href="https://blog.btaars.net/post/function-parameters-in-golang/">Function parameters in golang</a>
+        </div>
+        
+        
+        <div id="pagenavigation-prev">
+          <span class="pagenav-label">Next</span>
+          <a href="https://blog.btaars.net/post/getting-started-with-aliyuncli/">Getting Started with the aliyun CLI</a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </footer>
+</div>
+        </div>
+        <div class="sidebar">
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Author</span>
+    </div>
+    <div id="author">
+      <span>btaars.net</span>
+      <div>
+        
+        <a href="https://twitter.com/ebsarr37"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        <a href="https://github.com/ebsarr"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Categories</span>
+    </div>
+    <div class="categories">
+      <ul>
+        
+        <li>
+          <a href="/categories/alibaba-cloud"><span></span>alibaba-cloud (2)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/coding"><span></span>coding (4)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/ecs"><span></span>ecs (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/golang"><span></span>golang (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/misc"><span></span>misc (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/sysadmin"><span></span>sysadmin (1)</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>RSS</span>
+    </div>
+    <div id="rss">
+      <a href="https://blog.btaars.net/index.xml" type="application/rss+xml" target="_blank">
+        <i class="fa fa-rss-square fa-2x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+      </div>
+      <footer>
+        <div id="site-footer-wrap">
+          <div id="site-footer">
+            <span>Powered by <a href="https://gohugo.io/">Hugo</a>.</span>
+            <span>
+              
+              Copyright (c) 2019, <a href="https://blog.btaars.net/">btaars.net</a>
+              
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+

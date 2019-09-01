@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Sysadmin on btaars.net</title>
+    <title>sysadmin on btaars.net</title>
     <link>https://blog.btaars.net/categories/sysadmin/</link>
-    <description>Recent content in Sysadmin on btaars.net</description>
+    <description>Recent content in sysadmin on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 05 Dec 2017 01:23:06 +0900</lastBuildDate>

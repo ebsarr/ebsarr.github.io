@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on btaars.net</title>
@@ -6,8 +5,35 @@
     <description>Recent content in Tags on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Mar 2019 17:21:59 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 28 Aug 2019 23:53:59 +0900</lastBuildDate>
     <atom:link href="/tags/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>coding</title>
+      <link>https://blog.btaars.net/tags/coding/</link>
+      <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/coding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://blog.btaars.net/tags/golang/</link>
+      <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sh</title>
+      <link>https://blog.btaars.net/tags/sh/</link>
+      <pubDate>Sun, 03 Mar 2019 17:23:47 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/sh/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Alibaba Cloud</title>
@@ -19,7 +45,7 @@
     </item>
     
     <item>
-      <title>Api</title>
+      <title>api</title>
       <link>https://blog.btaars.net/tags/api/</link>
       <pubDate>Sat, 02 Mar 2019 17:21:59 +0900</pubDate>
       
@@ -28,16 +54,7 @@
     </item>
     
     <item>
-      <title>Backup</title>
-      <link>https://blog.btaars.net/tags/backup/</link>
-      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/backup/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cli</title>
+      <title>cli</title>
       <link>https://blog.btaars.net/tags/cli/</link>
       <pubDate>Sat, 02 Mar 2019 17:21:59 +0900</pubDate>
       
@@ -46,20 +63,65 @@
     </item>
     
     <item>
-      <title>Devops</title>
-      <link>https://blog.btaars.net/tags/devops/</link>
-      <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
+      <title>backup</title>
+      <link>https://blog.btaars.net/tags/backup/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
       
-      <guid>https://blog.btaars.net/tags/devops/</guid>
+      <guid>https://blog.btaars.net/tags/backup/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Ecs</title>
+      <title>ecs</title>
       <link>https://blog.btaars.net/tags/ecs/</link>
       <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
       
       <guid>https://blog.btaars.net/tags/ecs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>storage</title>
+      <link>https://blog.btaars.net/tags/storage/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/storage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sysadmin</title>
+      <link>https://blog.btaars.net/tags/sysadmin/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/sysadmin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>misc</title>
+      <link>https://blog.btaars.net/tags/misc/</link>
+      <pubDate>Sat, 02 Feb 2019 21:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://blog.btaars.net/tags/python/</link>
+      <pubDate>Mon, 26 Mar 2018 00:14:07 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devops</title>
+      <link>https://blog.btaars.net/tags/devops/</link>
+      <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/devops/</guid>
       <description></description>
     </item>
     
@@ -73,56 +135,11 @@
     </item>
     
     <item>
-      <title>Golang</title>
-      <link>https://blog.btaars.net/tags/golang/</link>
-      <pubDate>Tue, 05 Dec 2017 01:23:06 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Hugo</title>
+      <title>hugo</title>
       <link>https://blog.btaars.net/tags/hugo/</link>
       <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
       
       <guid>https://blog.btaars.net/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Misc</title>
-      <link>https://blog.btaars.net/tags/misc/</link>
-      <pubDate>Sat, 02 Feb 2019 21:36:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/misc/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>https://blog.btaars.net/tags/python/</link>
-      <pubDate>Mon, 26 Mar 2018 00:14:07 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Storage</title>
-      <link>https://blog.btaars.net/tags/storage/</link>
-      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/storage/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Sysadmin</title>
-      <link>https://blog.btaars.net/tags/sysadmin/</link>
-      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/sysadmin/</guid>
       <description></description>
     </item>
     

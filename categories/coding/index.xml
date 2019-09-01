@@ -1,13 +1,30 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Coding on btaars.net</title>
+    <title>coding on btaars.net</title>
     <link>https://blog.btaars.net/categories/coding/</link>
-    <description>Recent content in Coding on btaars.net</description>
+    <description>Recent content in coding on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Mar 2018 00:14:07 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 28 Aug 2019 23:53:59 +0900</lastBuildDate>
     <atom:link href="/categories/coding/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Function parameters in golang</title>
+      <link>https://blog.btaars.net/post/function-parameters-in-golang/</link>
+      <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/function-parameters-in-golang/</guid>
+      <description>Today I want to share a simple concept that I found useful when writing functions in go. Before jumping in, I want to talk about context to better illustrate the use case. A couple of years ago, I developed a simple CLI tool to interact with packet cloud using their go SDK . As you may guess, the CLI tool had to implement all the major operations/functions provided by the cloud, meaning create, start, stop servers, manage the network environment etc &amp;hellip; The first step was to create a function for each operation, and each function would define the options and parameters that would be submitted to the corresponding packet API.</description>
+    </item>
+    
+    <item>
+      <title>Shell scripting tips</title>
+      <link>https://blog.btaars.net/post/shell-scripting-tips/</link>
+      <pubDate>Sun, 03 Mar 2019 17:23:47 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/shell-scripting-tips/</guid>
+      <description>It&amp;rsquo;s been a while since the last time I wrote a shell script. A few years ago I had to automate many tasks for managing thousands of servers. This made me write many scripts for many purposes, like running a sanity check on a set of clusters, collecting and analysing logs or automating deployment of configurations across a set of hundreds of servers. I ended up with many tools at hand, and needed a way to productively write new tools, and also reuse the codes common to all the scripts etc &amp;hellip; In this post I will share the few practices that I applied when writing my scripts.</description>
+    </item>
     
     <item>
       <title>Introducing petitdb</title>

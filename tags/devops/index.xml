@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Devops on btaars.net</title>
+    <title>devops on btaars.net</title>
     <link>https://blog.btaars.net/tags/devops/</link>
-    <description>Recent content in Devops on btaars.net</description>
+    <description>Recent content in devops on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 05 Dec 2017 01:23:06 +0900</lastBuildDate>

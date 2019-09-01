@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="Hugo 0.55.0-DEV" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://blog.btaars.net/index.xml" rel="alternate" type="application/rss+xml" title="btaars.net" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    
+    <script src="https://apis.google.com/js/platform.js" async defer>{lang: 'ja'}</script>
+    
+    <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+    <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>Function parameters in golang | btaars.net</title>
+  </head>
+  <body>
+    <div id="wrap">
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90354151-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+      <header class="site-header">
+        <div class="site-header-left">
+          <a class="site-header-title" href="https://blog.btaars.net/">btaars.net</a>
+        </div>
+      </header>
+      <div class="container">
+        <div id="main">
+
+<div class="article">
+  <header>
+    <div class="article-header">
+      <h1>Function parameters in golang</h1>
+      <div class="article-meta">
+        <span class="posttime">2019/08/28</span>
+        
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/golang">golang</a>
+    </li>
+    
+    <li>
+        <a href="/tags/coding">coding</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+    
+  </ul>
+</div>
+
+
+  </header>
+  <div class="content">
+    
+
+<p>Today I want to share a simple concept that I found useful when writing functions in go. Before jumping in, I want to talk about context to better illustrate the use case.
+<br><br>
+A couple of years ago, I developed a simple <a href="https://github.com/ebsarr/packet">CLI tool</a> to interact with <a href="https://www.packet.com/">packet cloud</a> using their <a href="https://github.com/packethost/packngo">go SDK</a> . As you may guess, the CLI tool had to implement all the major operations/functions provided by the cloud, meaning create, start, stop servers, manage the network environment etc &hellip; The first step was to create a function for each operation, and each function would define the options and parameters that would be submitted to the corresponding packet API. I wanted to have these wrapper functions so that the CLI logic would not have to care about how to create the packet client, or how to call the API, but only focus on the user interface, meaning define the CLI parameters, help contents etc&hellip; Below is an example of one of the wrapper functions.</p>
+
+<pre><code class="language-go">func CreateDevice(projectID, hostname, plan, facility, operatingSystem, billingCycle, userData, ipxeScriptURL string, tags []string, spotInstance, alwaysPXE bool, spotPriceMax float64, terminationTime *time.Time, silent bool) error {
+	var err error
+	// Create the device
+	return err
+}
+</code></pre>
+
+<p>Looking at this code now, I&rsquo;m like, what was I thinking??? I think that a better approach would be to define a struct whose purpose would be to pass the parameters to the function. In fact, the guys at packet actually included in the SDK these structs for most of the API calls that take many options:
+<br>Example: here is an illustration with a device create request parameters in a struct</p>
+
+<pre><code class="language-go">// DeviceCreateRequest type used to create a Packet device
+type DeviceCreateRequest struct {
+	Hostname              string    
+	Plan                  string    
+	Facility              []string  
+	OS                    string    
+	BillingCycle          string    
+	ProjectID             string    
+	UserData              string    
+	Storage               string    
+	Tags                  []string  
+	IPXEScriptURL         string    
+	PublicIPv4SubnetSize  int       
+	AlwaysPXE             bool      
+	HardwareReservationID string    
+	SpotInstance          bool      
+	SpotPriceMax          float64   
+	TerminationTime       *Timestamp
+	CustomData            string    
+	UserSSHKeys           []string  
+	ProjectSSHKeys        []string  
+	Features              map[string]string        
+	IPAddresses           []IPAddressCreateRequest 
+}
+</code></pre>
+
+<p>So a refactored <code>CreateDevice</code> wrapper function would look like this:</p>
+
+<pre><code class="language-go">func CreateDevice(p *DeviceCreateRequest) error {
+	var err error
+	// Create the device
+	// We can access the parameters through *DeviceCreateRequest
+	return err
+}
+</code></pre>
+
+<p>In this example, the structs are already included in the SDK, but even if they are not present, I think it still makes sense to create them as needed for the following reasons.</p>
+
+<h4 id="readability">Readability</h4>
+
+<p>Compare the two function declarations to see what I mean. All the function parameters in the first function are difficult to read and also difficult to document. By using a struct, the function declaration can be more consise and easy to read. On top of that, each parameter in the struct can be easily documentated. In the packngo SDK, you can see how some relevant options are documented in the struct:</p>
+
+<pre><code class="language-go">type DeviceCreateRequest struct {
+	// Skipping all the other parameters to make illustration
+	// shorther
+
+	// UserSSHKeys is a list of user UUIDs - essentialy
+	// a list of collaborators. The users must be a collaborator
+	// in the same project where the device is created.
+	// The user's SSH keys then go to the device.
+	UserSSHKeys           []string
+	// Project SSHKeys is a list of SSHKeys resource UUIDs.
+	// If this param is supplied, only the listed SSHKeys will go
+	// to the device.
+	// Any other Project SSHKeys and any User SSHKeys will not
+	// be present in the device.
+	ProjectSSHKeys        []string  
+}
+</code></pre>
+
+<h4 id="handling-of-default-values">Handling of default values</h4>
+
+<p>The function caller only has to set the parameters(options) that they are interested in. The other ones can be checked and provided with default values inside the function:</p>
+
+<pre><code class="language-go">func CreateDevice(p *DeviceCreateRequest) error {
+	var err error
+	// Before creating the device, we can set default values
+	// when necessary
+	if p.OS == &quot;&quot; {
+		p.OS = &quot;ubuntu&quot;
+	}
+	// create the device...
+	return err
+}
+</code></pre>
+
+<p>Then the caller only has to set mandatory options, and let the <code>CreateDevice</code> function set default values when needed:</p>
+
+<pre><code class="language-go">
+func main () {
+	// Call　CreateDevice
+	err := CreateDevice(&amp;CreateDeviceRequest{
+		Hostname: &quot;create-device-001&quot;,
+		// The CreateDevice function can take care of setting
+		// default values for all the other parameters.
+	})
+	if err != nil {
+		panic(err)
+	}
+}
+</code></pre>
+
+<p>By comparison, the caller would have to set all the possible options for a device create request in the first function, even though <code>Hostname</code> is the only desired option in this case.</p>
+
+<h4 id="higher-maintainability">Higher maintainability</h4>
+
+<p>With a struct as function parameter, you can easily modify the parameters without changing the function declaration. At least in this case, it is easy to add new optional paramters to create a device, without breaking any code that rely on the <code>CreateDevice</code> function.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>I&rsquo;m not sure if this is a definitive best practice, but I found it very usefull to define function paramters in a struct, especially when you have to deal with multiple paramters:</p>
+
+<pre><code class="language-go">// DoSomethingParameters represents the parameters of
+// the `DoSomething` function
+type DoSomethingParameters struct {
+	ParamOne string
+	ParamTwo int
+}
+
+func DoSomething(p *DoSomethingParameters) error {
+	var err error
+	// do something
+	return err
+}
+</code></pre>
+
+<p>Well that&rsquo;s it.</p>
+
+  </div>
+  <footer>
+    <div class="article-footer">
+      
+<div class="tags">
+  <ul>
+    
+    <li>
+        <a href="/tags/golang">golang</a>
+    </li>
+    
+    <li>
+        <a href="/tags/coding">coding</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      
+      
+<div id="share-buttons">
+  <ul>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="ebsarr37">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </li>
+    
+    
+    
+    
+    <li>
+      <div class="g-plusone" data-size="medium"></div>
+    </li>
+    
+    
+    <li>
+      <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+    
+    
+  </ul>
+</div>
+
+
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "btaars" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      <div id="pagenavigation-next-prev">
+        
+        
+        <div id="pagenavigation-prev">
+          <span class="pagenav-label">Next</span>
+          <a href="https://blog.btaars.net/post/shell-scripting-tips/">Shell scripting tips</a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </footer>
+</div>
+        </div>
+        <div class="sidebar">
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Author</span>
+    </div>
+    <div id="author">
+      <span>btaars.net</span>
+      <div>
+        
+        <a href="https://twitter.com/ebsarr37"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        <a href="https://github.com/ebsarr"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>Categories</span>
+    </div>
+    <div class="categories">
+      <ul>
+        
+        <li>
+          <a href="/categories/alibaba-cloud"><span></span>alibaba-cloud (2)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/coding"><span></span>coding (4)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/ecs"><span></span>ecs (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/golang"><span></span>golang (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/misc"><span></span>misc (1)</a>
+        </li>
+        
+        <li>
+          <a href="/categories/sysadmin"><span></span>sysadmin (1)</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <span>RSS</span>
+    </div>
+    <div id="rss">
+      <a href="https://blog.btaars.net/index.xml" type="application/rss+xml" target="_blank">
+        <i class="fa fa-rss-square fa-2x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+      </div>
+      <footer>
+        <div id="site-footer-wrap">
+          <div id="site-footer">
+            <span>Powered by <a href="https://gohugo.io/">Hugo</a>.</span>
+            <span>
+              
+              Copyright (c) 2019, <a href="https://blog.btaars.net/">btaars.net</a>
+              
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+

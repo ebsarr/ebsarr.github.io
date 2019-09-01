@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cli on btaars.net</title>
+    <title>cli on btaars.net</title>
     <link>https://blog.btaars.net/tags/cli/</link>
-    <description>Recent content in Cli on btaars.net</description>
+    <description>Recent content in cli on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 02 Mar 2019 17:21:59 +0900</lastBuildDate>

@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hugo on btaars.net</title>
+    <title>hugo on btaars.net</title>
     <link>https://blog.btaars.net/tags/hugo/</link>
-    <description>Recent content in Hugo on btaars.net</description>
+    <description>Recent content in hugo on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 11 Jan 2017 00:14:07 +0900</lastBuildDate>
