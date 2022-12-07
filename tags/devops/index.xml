@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>devops on btaars.net</title>
@@ -7,9 +6,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 05 Dec 2017 01:23:06 +0900</lastBuildDate>
-    
-	<atom:link href="https://blog.btaars.net/tags/devops/index.xml" rel="self" type="application/rss+xml" />
-    
+    <atom:link href="/tags/devops/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>About logs</title>
