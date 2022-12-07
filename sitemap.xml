@@ -32,25 +32,25 @@
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/tags/coding/</loc>
-    <lastmod>2019-08-28T23:53:59+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.btaars.net/categories/coding/</loc>
     <lastmod>2019-08-28T23:53:59+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/tags/golang/</loc>
+    <loc>https://blog.btaars.net/tags/coding/</loc>
     <lastmod>2019-08-28T23:53:59+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.btaars.net/categories/golang/</loc>
+    <lastmod>2019-08-28T23:53:59+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.btaars.net/tags/golang/</loc>
     <lastmod>2019-08-28T23:53:59+09:00</lastmod>
     <priority>0</priority>
   </url>
@@ -67,13 +67,13 @@
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/tags/alibaba-cloud/</loc>
+    <loc>https://blog.btaars.net/categories/alibaba-cloud/</loc>
     <lastmod>2019-03-02T17:21:59+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/categories/alibaba-cloud/</loc>
+    <loc>https://blog.btaars.net/tags/alibaba-cloud/</loc>
     <lastmod>2019-03-02T17:21:59+09:00</lastmod>
     <priority>0</priority>
   </url>
@@ -136,13 +136,13 @@
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/tags/misc/</loc>
+    <loc>https://blog.btaars.net/categories/misc/</loc>
     <lastmod>2019-02-02T21:36:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/categories/misc/</loc>
+    <loc>https://blog.btaars.net/tags/misc/</loc>
     <lastmod>2019-02-02T21:36:00+09:00</lastmod>
     <priority>0</priority>
   </url>
