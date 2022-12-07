@@ -3,6 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.btaars.net/post/been_a_while/</loc>
+    <lastmod>2022-12-06T23:16:31+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.btaars.net/post/</loc>
+    <lastmod>2022-12-06T23:16:31+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.btaars.net/</loc>
+    <lastmod>2022-12-06T23:16:31+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.btaars.net/categories/</loc>
     <lastmod>2019-08-28T23:53:59+09:00</lastmod>
     <priority>0</priority>
@@ -14,19 +31,7 @@
   </url>
   
   <url>
-    <loc>https://blog.btaars.net/post/</loc>
-    <lastmod>2019-08-28T23:53:59+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.btaars.net/tags/</loc>
-    <lastmod>2019-08-28T23:53:59+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.btaars.net/</loc>
     <lastmod>2019-08-28T23:53:59+09:00</lastmod>
     <priority>0</priority>
   </url>
