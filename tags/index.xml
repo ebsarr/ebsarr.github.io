@@ -5,8 +5,17 @@
     <description>Recent content in Tags on btaars.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Aug 2019 23:53:59 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 09 Dec 2022 19:45:31 +0900</lastBuildDate>
     <atom:link href="/tags/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>soccer</title>
+      <link>https://blog.btaars.net/tags/soccer/</link>
+      <pubDate>Fri, 09 Dec 2022 19:45:31 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/soccer/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>coding</title>
@@ -131,15 +140,6 @@
       <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
       
       <guid>https://blog.btaars.net/tags/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hugo</title>
-      <link>https://blog.btaars.net/tags/hugo/</link>
-      <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/hugo/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,21 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sports on btaars.net</title>
+    <link>https://blog.btaars.net/categories/sports/</link>
+    <description>Recent content in sports on btaars.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Dec 2022 19:45:31 +0900</lastBuildDate>
+    <atom:link href="/categories/sports/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Takeaways from the world cup</title>
+      <link>https://blog.btaars.net/post/takeaways-from-the-worl-cup/</link>
+      <pubDate>Fri, 09 Dec 2022 19:45:31 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/takeaways-from-the-worl-cup/</guid>
+      <description>It&amp;rsquo;s currently the World Cup, and all soccers fans around the world are following the competition. That includes me. I&amp;rsquo;m not the type of soccer fan that follows the interesting games and players of the European leagues. However, I do follow the amazing highlights of all those amazing players on Youtube, it&amp;rsquo;s very enternaining. But the World Cup is a special competition. All the best players from the best teams around the world gather in one place to compete.</description>
+    </item>
+    
+  </channel>
+</rss>
