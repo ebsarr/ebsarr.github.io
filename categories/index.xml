@@ -18,6 +18,15 @@
     </item>
     
     <item>
+      <title>misc</title>
+      <link>https://blog.btaars.net/categories/misc/</link>
+      <pubDate>Tue, 06 Dec 2022 23:16:31 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>coding</title>
       <link>https://blog.btaars.net/categories/coding/</link>
       <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
@@ -27,38 +36,11 @@
     </item>
     
     <item>
-      <title>golang</title>
-      <link>https://blog.btaars.net/categories/golang/</link>
-      <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/categories/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Alibaba Cloud</title>
-      <link>https://blog.btaars.net/categories/alibaba-cloud/</link>
+      <title>Cloud</title>
+      <link>https://blog.btaars.net/categories/cloud/</link>
       <pubDate>Sat, 02 Mar 2019 17:21:59 +0900</pubDate>
       
-      <guid>https://blog.btaars.net/categories/alibaba-cloud/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ECS</title>
-      <link>https://blog.btaars.net/categories/ecs/</link>
-      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/categories/ecs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>misc</title>
-      <link>https://blog.btaars.net/categories/misc/</link>
-      <pubDate>Sat, 02 Feb 2019 21:36:00 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/categories/misc/</guid>
+      <guid>https://blog.btaars.net/categories/cloud/</guid>
       <description></description>
     </item>
     

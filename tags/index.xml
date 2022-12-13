@@ -18,15 +18,6 @@
     </item>
     
     <item>
-      <title>coding</title>
-      <link>https://blog.btaars.net/tags/coding/</link>
-      <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
-      
-      <guid>https://blog.btaars.net/tags/coding/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>golang</title>
       <link>https://blog.btaars.net/tags/golang/</link>
       <pubDate>Wed, 28 Aug 2019 23:53:59 +0900</pubDate>
@@ -140,6 +131,15 @@
       <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
       
       <guid>https://blog.btaars.net/tags/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://blog.btaars.net/tags/hugo/</link>
+      <pubDate>Wed, 11 Jan 2017 00:14:07 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/tags/hugo/</guid>
       <description></description>
     </item>
     

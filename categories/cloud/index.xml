@@ -1,0 +1,31 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloud on btaars.net</title>
+    <link>https://blog.btaars.net/categories/cloud/</link>
+    <description>Recent content in Cloud on btaars.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 02 Mar 2019 17:21:59 +0900</lastBuildDate>
+    <atom:link href="/categories/cloud/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Getting Started with the aliyun CLI</title>
+      <link>https://blog.btaars.net/post/getting-started-with-aliyuncli/</link>
+      <pubDate>Sat, 02 Mar 2019 17:21:59 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/getting-started-with-aliyuncli/</guid>
+      <description>In the previous post, I discussed about backup and restore of cloud disks on Alibaba Cloud. For illustration purpose, I used the aliyun command line interface, but then realized that I haven&amp;rsquo;t described how to get started with the CLI tool. In this post, I will describe all the steps needed to properly setup and use the CLI.
+Prerequisites Before moving to the CLI topic, I will spend some time to talk about the Alibaba Cloud account and RAM service.</description>
+    </item>
+    
+    <item>
+      <title>Alibaba Cloud - Cloud Disks Backup and Restore</title>
+      <link>https://blog.btaars.net/post/aliyun-backup-and-restore/</link>
+      <pubDate>Sun, 24 Feb 2019 18:36:00 +0900</pubDate>
+      
+      <guid>https://blog.btaars.net/post/aliyun-backup-and-restore/</guid>
+      <description>Creating virtual machines on the cloud, regardless of the platform is pretty easy. It is made so easy that you might jump in and fire machines without prior planning. The advantage of the cloud is that you can get started without worrying about initial costs, and scale as needed as your business grows. But this does not mean that you don&amp;rsquo;t have to plan before getting stared. Each Cloud Provider has its own way of providing management features for their products.</description>
+    </item>
+    
+  </channel>
+</rss>
